@@ -1,0 +1,148 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Expo: typecheck",
+      "type": "shell",
+      "command": "npm run typecheck",
+      "options": {
+        "cwd": "${workspaceFolder}/hardhat-expo"
+      },
+      "problemMatcher": "$tsc",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Expo: start",
+      "type": "shell",
+      "command": "npx expo start",
+      "options": {
+        "cwd": "${workspaceFolder}/hardhat-expo"
+      },
+      "problemMatcher": [],
+      "isBackground": true
+    },
+    {
+      "label": "Compose: up --build (api + db + redis + fullstack)",
+      "type": "shell",
+      "command": "docker compose up --build",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "isBackground": true
+    },
+    {
+      "label": "Compose: up -d --build (detached)",
+      "type": "shell",
+      "command": "docker compose up -d --build",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Compose: down",
+      "type": "shell",
+      "command": "docker compose down",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Backend: Docker logs (api)",
+      "type": "shell",
+      "command": "docker compose logs -f api",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "isBackground": true
+    },
+    {
+      "label": "Fullstack: Rails db:migrate (Postgres compartilhado)",
+      "type": "shell",
+      "command": "docker compose exec fullstack bin/rails db:migrate",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Backend: shell in API container",
+      "type": "shell",
+      "command": "docker compose exec api sh",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Fullstack: Docker logs (Sidekiq worker)",
+      "type": "shell",
+      "command": "docker compose logs -f fullstack-worker",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "isBackground": true
+    },
+    {
+      "label": "Fullstack: Docker logs (Rails)",
+      "type": "shell",
+      "command": "docker compose logs -f fullstack",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "isBackground": true
+    },
+    {
+      "label": "Fullstack: shell in Rails container",
+      "type": "shell",
+      "command": "docker compose exec fullstack bash",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Fullstack: bundle install (in container)",
+      "type": "shell",
+      "command": "docker compose exec fullstack bundle install",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Fullstack: RSpec (in container)",
+      "type": "shell",
+      "command": "docker compose exec fullstack bin/rspec",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Fullstack: RuboCop (in container)",
+      "type": "shell",
+      "command": "docker compose exec fullstack bin/rubocop",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "migrationName",
+      "type": "promptString",
+      "description": "Short migration description (snake_case)",
+      "default": "describe_change"
+    }
+  ]
+}

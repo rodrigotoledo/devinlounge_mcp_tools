@@ -1,0 +1,34 @@
+---
+description: Hardhat monorepo layout and stacks for Cursor agent
+alwaysApply: true
+---
+
+# Hardhat workspace
+
+- **`hardhat-expo/`** — Expo Router app (React Native, NativeWind/Tailwind, TypeScript strict). Run scripts from this folder (`npm run typecheck`, `expo start`).
+- **`hardhat-backend/`** — FastAPI + SQLAlchemy (Python). **All** API run/install/Python commands go through **Docker Compose at the repo root** (`docker compose exec api …` / `run --rm api …`). Env: `hardhat-backend/.env`. See rule **backend-docker** and **`CLAUDE.md`**.
+- **`hardhat-fullstack/`** — Rails 8. **Prefer Docker** for `bundle`, `rails`, `rspec`, `rubocop`: `docker compose exec fullstack …` from repo root (same Compose file). Schema migrations: `hardhat-fullstack/db/migrate/`.
+- **Repo root** — `docker-compose.yml` (Postgres, Redis, `api`, `fullstack`); may contain Ruby/RuboCop config; prefer stack-specific conventions in each subproject.
+
+## Conventions
+
+- Prefer **focused diffs**: change only what the task requires; match existing patterns in the touched package.
+- **Expo**: file-based routes under `hardhat-expo/app/`; shared UI in `hardhat-expo/components/`.
+- **Expo UI (NativeWind)**: Prefer **Tailwind utilities via `className`** (see rule `expo-nativewind-tailwind`). Use `style={{}}` only when necessary. Use `theme/colors.ts` for programmatic colors.
+- **Backend**: keep Pydantic/SQLAlchemy models aligned with the DB; **schema changes** live in **`hardhat-fullstack/db/migrate/`** — run `docker compose exec fullstack bin/rails db:migrate` (see root `docker-compose.yml`).
+
+### Rails tests (`hardhat-fullstack/`)
+
+- **RSpec only** (`spec/`, `bin/rspec` via Compose `fullstack`); do not default to Minitest for app tests.
+- **Never assert equality on full error or flash message strings** — they are brittle (copy/i18n). Use validity/`errors` details or key presence; for flash, assert **that** `:notice` / `:alert` is present (or missing), not the exact text.
+- **Models**: prefer validation / invalid state (`be_valid`, `errors.added?`, `errors[:attr].present?`), not matching message text.
+- **Controllers / requests**: status, redirects, side effects, flash **presence**; not flash copy. See **`CLAUDE.md`** (Testing — hardhat-fullstack).
+
+### RuboCop (`hardhat-fullstack/`)
+
+- After **any** change under `hardhat-fullstack/` (`.rb`, `.erb`, etc.), run **`docker compose exec fullstack bin/rubocop`** and fix offenses (see rule `fullstack-rubocop-always`).
+
+## Editor hints
+
+- Workspace TypeScript for the app comes from `hardhat-expo/node_modules/typescript` (VS Code/Cursor setting).
+- Tailwind IntelliSense uses `hardhat-expo/tailwind.config.js`; `className` is the primary styling prop in the Expo app (see `tailwindCSS.classAttributes` in `.vscode/settings.json`).

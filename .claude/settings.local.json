@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(docker compose*)",
+      "Bash(docker-compose*)",
+      "Bash(cd hardhat-expo && npm*)",
+      "Bash(cd hardhat-expo && npx expo*)",
+      "Bash(npm run typecheck)",
+      "Bash(grep*)",
+      "Bash(find*)",
+      "Bash(ls*)",
+      "Bash(cat*)",
+      "Bash(git status)",
+      "Bash(git log*)",
+      "Bash(git diff*)",
+      "Bash(git pull*)",
+      "Bash(git push*)",
+      "Bash(git checkout*)",
+      "Bash(git branch*)",
+      "Bash(python -c *)",
+      "Bash(bundle exec*)",
+      "Bash(bin/rails*)",
+      "Bash(bin/rspec*)",
+      "Bash(bin/rubocop*)"
+    ],
+    "deny": [
+      "Bash(pip install*)",
+      "Bash(uvicorn*)",
+      "Bash(alembic*)",
+      "Bash(python -m*)",
+      "Bash(sudo*)",
+      "Bash(rm -rf*)",
+      "Bash(* > /dev/null*)"
+    ]
+  }
+}

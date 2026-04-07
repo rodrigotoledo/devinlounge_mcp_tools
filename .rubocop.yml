@@ -1,0 +1,27 @@
+AllCops:
+  TargetRubyVersion: 3.3
+  NewCops: enable
+  Exclude:
+    - 'db/schema.rb'
+    - 'vendor/**/*'
+    - 'config/initializers/rolify.rb'
+    - 'bin/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+    - 'log/**/*'
+    - '**/*.erb'
+    - '**/*.html.erb'
+
+Layout/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/ClassLength:
+  Max: 200
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+    - 'config/routes.rb'

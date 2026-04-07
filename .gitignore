@@ -1,0 +1,122 @@
+# ============================================================
+# ROOT — monorepo with hardhat-expo (Expo/RN) + hardhat-backend (FastAPI)
+# ============================================================
+
+# ─── Secrets & local env ────────────────────────────────────
+.env
+.env.local
+.env.*.local
+.envrc
+
+# ─── macOS ──────────────────────────────────────────────────
+.DS_Store
+*.pem
+
+# ─── Editor / IDE ───────────────────────────────────────────
+.idea/
+*.swp
+*.swo
+
+# ─── Logs ───────────────────────────────────────────────────
+*.log
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# ─── Temp ───────────────────────────────────────────────────
+tmp/
+.cache
+
+# ============================================================
+# EXPO / React Native (hardhat-expo/)
+# ============================================================
+
+# Expo build artifacts
+hardhat-expo/.expo/
+hardhat-expo/dist/
+hardhat-expo/web-build/
+hardhat-expo/expo-env.d.ts
+
+# Generated native folders (after prebuild)
+hardhat-expo/ios/
+hardhat-expo/android/
+
+# Metro bundler
+.metro-health-check*
+
+# Node
+node_modules/
+*.tsbuildinfo
+
+# Native signing / certificates
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# ============================================================
+# FASTAPI / Python (hardhat-backend/)
+# ============================================================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Cython debug symbols
+cython_debug/
+
+# Virtual environments (should not exist; use Docker)
+venv/
+env/
+ENV/
+.venv/
+.python-version
+
+# Package managers
+Pipfile.lock
+poetry.lock
+
+# PyInstaller
+*.spec
+
+# Jupyter
+.ipynb_checkpoints
+
+# Test / coverage
+.pytest_cache/
+.mypy_cache/
+htmlcov/
+.coverage
+.coverage.*
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# FastAPI runtime uploads / generated static
+hardhat-backend/static/
+hardhat-backend/media/
+hardhat-backend/uploads/
+
+# SQLite databases
+*.sqlite3
+*.db
+
+# Alembic — keep migrations, ignore only runtime artifacts
+# (backend schema migrations live in hardhat-fullstack/db/migrate/)
+
+# Build / packaging
+build/
+dist/
+*.egg-info/
+
+# ============================================================
+# TOOLING (local, not committed)
+# ============================================================
+
+# Ruby (optional tooling at root)
+.bundle/
+vendor/bundle/

@@ -1,0 +1,137 @@
+{
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": true,
+  "editor.rulers": [
+    100
+  ],
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.stickyScroll.enabled": true,
+  "editor.linkedEditing": true,
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/__pycache__": true,
+    "**/.pytest_cache": true,
+    "**/.mypy_cache": true,
+    "**/.venv": true,
+    "**/dist": true,
+    "**/.expo": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/package-lock.json": true,
+    "**/.venv": true,
+    "**/__pycache__": true
+  },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/.git/objects/**": true,
+    "**/.venv/**": true,
+    "**/.expo/**": true
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python",
+    "editor.formatOnSave": true
+  },
+  "[ruby]": {
+    "editor.defaultFormatter": "Shopify.ruby-lsp",
+    "editor.formatOnSave": true
+  },
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "files.trimTrailingWhitespace": false
+  },
+  "typescript.tsdk": "hardhat-expo/node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "javascript.preferences.importModuleSpecifierEnding": "minimal",
+  "tailwindCSS.experimental.configFile": "${workspaceFolder}/hardhat-expo/tailwind.config.js",
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className"
+  ],
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    "className\\s*=\\s*[\"'`]([^\"'`]*)[\"'`]",
+    "className\\s*=\\s*\\{[\"'`]([^\"'`]*)[\"'`]\\}"
+  ],
+  "expo.appManifest": "${workspaceFolder}/hardhat-expo/app.json",
+  "expo.tsconfig": "${workspaceFolder}/hardhat-expo/tsconfig.json",
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}/hardhat-backend"
+  ],
+  "_comment_backend_docker_only": "Backend runtime/migrations/install MUST use Docker Compose from repo root (docker compose exec api …). The interpreter below is only for editor analysis.",
+  "python.defaultInterpreterPath": "python",
+  "python.terminal.activateEnvironment": false,
+  "python.languageServer": "Pylance",
+  "python.analysis.typeCheckingMode": "basic",
+  "_comment_ruby_docker": "RuboCop execution should be run via Docker (docker compose exec fullstack bin/rubocop). In-editor Ruby LSP can be used for navigation; avoid RuboCop Language Server on host to prevent bundler issues.",
+  "ruby.rubocop.enable": false,
+  "ruby.rubocop.useBundler": false,
+  "rubyLsp.bundleGemfile": "${workspaceFolder}/hardhat-fullstack/Gemfile",
+  "rubyLsp.useBundlerGemfile": true,
+  "rubyLsp.linters": [],
+  "rubyLsp.logLevel": "error",
+  "rubyLsp.formatter": "none",
+  "[ruby]": {
+    "editor.defaultFormatter": "Shopify.ruby-lsp",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "[erb]": {
+    "editor.defaultFormatter": "Shopify.ruby-lsp",
+    "editor.formatOnSave": true
+  },
+  "erb.erb-lint.enabled": false,
+  "chat.tools.terminal.autoApprove": {
+    "npx expo": true,
+    "docker compose": true,
+    "docker-compose": true
+  },
+  "emmet.includeLanguages": {
+    "erb": "html"
+  },
+  "files.associations": {
+    "*.erb": "erb",
+    "Gemfile*": "ruby",
+    "Rakefile*": "ruby",
+    "config.ru": "ruby",
+    "Procfile*": "yaml"
+  },
+  "search.followSymlinks": false,
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.showTabs": "multiple",
+  "workbench.tree.indent": 20,
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false
+}

@@ -1,0 +1,38 @@
+---
+description: API and Rails fullstack must use Docker Compose — agents must not default to host python/bundle/rails
+alwaysApply: true
+---
+
+# Docker Compose — API (`api`) + Rails (`fullstack`) + `db` + `redis`
+
+**Agents and terminals:** run **`docker compose` from the repository root** (`docker-compose.yml`). **Do not** default to host **`python`**, **`pip`**, **`uvicorn`**, **`bundle`**, **`rspec`**, **`rails`**, or **`rake`** for the composed API or Rails app unless the user explicitly opts out.
+
+- **FastAPI** (`hardhat-backend/`): all runtime, installs, and Python one-offs → **`docker compose exec api …`** or **`run --rm api …`**.
+- **Rails** (`hardhat-fullstack/`): migrations, `bundle install`, `rspec`, `rubocop`, consoles, generators → **`docker compose exec fullstack …`**. **Sidekiq** runs in service **`fullstack-worker`** (same `DATABASE_*` / `REDIS_URL` as `fullstack`).
+- **Postgres DDL** (shared with the API): **`docker compose exec fullstack bin/rails db:migrate`**. **Redis** (`REDIS_URL`): Action Cable + Sidekiq — distinct DB index from the FastAPI service when both use the same Redis host. Fragment cache = Solid Cache (Postgres `DATABASE_CACHE_NAME`).
+
+API reads **`hardhat-backend/.env`** when present; Rails reads **`hardhat-fullstack/.env`** when present.
+
+## Typical commands (repo root)
+
+| Goal | Command |
+|------|--------|
+| Start stack | `docker compose up --build` or `docker compose up -d --build` |
+| Stop | `docker compose down` |
+| API logs | `docker compose logs -f api` |
+| Fullstack logs | `docker compose logs -f fullstack` |
+| Sidekiq logs | `docker compose logs -f fullstack-worker` |
+| Shell (API) | `docker compose exec api sh` |
+| Shell (Rails) | `docker compose exec fullstack bash` |
+| Gems after `Gemfile` change | `docker compose exec fullstack bundle install` |
+| Migrate / schema | `docker compose exec fullstack bin/rails db:migrate` |
+| Generate migration | `docker compose exec fullstack bin/rails generate migration …` |
+| RSpec | `docker compose exec fullstack bin/rspec` |
+| RuboCop | `docker compose exec fullstack bin/rubocop` |
+| Python one-off | `docker compose exec api python -c "..."` or `docker compose run --rm api python …` |
+
+Use **`exec`** when the service is already **`up`**. Use **`run --rm`** for one-shots; **`db`** (and often **`redis`**) should be healthy for DB-backed work.
+
+## Expo
+
+**`hardhat-expo/`** uses **Node/npm on the host** (`npm run typecheck`, `npx expo start`). This rule does **not** apply there.

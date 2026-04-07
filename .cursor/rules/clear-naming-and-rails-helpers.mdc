@@ -1,0 +1,27 @@
+---
+description: Prefer clear naming (no abbreviations) and Rails helpers/partials for view logic
+alwaysApply: true
+---
+
+# Clear naming + Rails helpers
+
+## Naming clarity (all stacks)
+
+- Prefer **descriptive names** over short abbreviations.
+  - Good: `category`, `category_key`, `category_style`, `service_type`, `status_label`
+  - Avoid: `cat`, `st`, `svc`, `lbl`, `tmp`
+- Prefer intention-revealing booleans:
+  - Good: `provider_edit?`, `signed_in?`, `verification_required?`
+  - Avoid: `isProv`, `ok2`, `flag`
+- Use domain terms consistently across app + backend: **job**, **provider**, **client**, **category**, **status**.
+
+## Rails fullstack (`hardhat-fullstack/`)
+
+- Prefer putting non-trivial view logic in **Rails helpers** (e.g. `ApplicationHelper`, `OffersHelper`) or **partials**, rather than inline ERB.
+- Keep helpers **small and focused**; avoid heavy business logic in helpers (belongs to models/services).
+- When you need a derived label or CSS class mapping, prefer a helper method (testable, reusable).
+
+## Expo (`hardhat-expo/`)
+
+- Same naming rule applies for component props/state: prefer clear names (`category`, `style`, `searchQuery`) over abbreviations.
+

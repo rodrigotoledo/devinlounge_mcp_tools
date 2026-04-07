@@ -1,0 +1,443 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1775516309035,
+  "projectRoot": "/home/rtoledo/www/hardhat",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs",
+      "scripts"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 7,
+      "lastAccessed": 1775516309013,
+      "keyFiles": [
+        "AGENTS.md",
+        "GAPS-PLANO-ACAO.md",
+        "OAUTH_IMPLEMENTACAO.md",
+        "PLANO-ACAO-PRODUTO.md",
+        "PLANO_FECHAR_BRECHAS.md"
+      ]
+    },
+    "hardhat-backend": {
+      "path": "hardhat-backend",
+      "purpose": null,
+      "fileCount": 8,
+      "lastAccessed": 1775516309020,
+      "keyFiles": [
+        "Dockerfile",
+        "README.md",
+        "requirements.txt"
+      ]
+    },
+    "hardhat-expo": {
+      "path": "hardhat-expo",
+      "purpose": null,
+      "fileCount": 16,
+      "lastAccessed": 1775516309022,
+      "keyFiles": [
+        "App.tsx",
+        "README.md",
+        "app.json",
+        "babel.config.js",
+        "global.css"
+      ]
+    },
+    "hardhat-fullstack": {
+      "path": "hardhat-fullstack",
+      "purpose": null,
+      "fileCount": 15,
+      "lastAccessed": 1775516309026,
+      "keyFiles": [
+        "Dockerfile",
+        "Gemfile",
+        "Gemfile.lock",
+        "Procfile.dev",
+        "README.md"
+      ]
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 1,
+      "lastAccessed": 1775516309027,
+      "keyFiles": [
+        "sync-env-from-example.sh"
+      ]
+    },
+    "hardhat-backend/app": {
+      "path": "hardhat-backend/app",
+      "purpose": "Application code",
+      "fileCount": 11,
+      "lastAccessed": 1775516309032,
+      "keyFiles": [
+        "__init__.py",
+        "address_utils.py",
+        "auth.py"
+      ]
+    },
+    "hardhat-backend/scripts": {
+      "path": "hardhat-backend/scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 1,
+      "lastAccessed": 1775516309033,
+      "keyFiles": [
+        "run_with_ngrok.py"
+      ]
+    },
+    "hardhat-expo/app": {
+      "path": "hardhat-expo/app",
+      "purpose": "Application code",
+      "fileCount": 3,
+      "lastAccessed": 1775516309034,
+      "keyFiles": [
+        "_layout.tsx",
+        "index.tsx",
+        "onboarding.tsx"
+      ]
+    },
+    "hardhat-expo/assets": {
+      "path": "hardhat-expo/assets",
+      "purpose": "Static assets",
+      "fileCount": 13,
+      "lastAccessed": 1775516309034,
+      "keyFiles": [
+        "android-icon-background.png",
+        "android-icon-foreground.png",
+        "android-icon-monochrome.png"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "",
+      "accessCount": 18,
+      "lastAccessed": 1775517240001,
+      "type": "directory"
+    },
+    {
+      "path": "hardhat-expo/app/(public)/signup.tsx",
+      "accessCount": 18,
+      "lastAccessed": 1775517906620,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-expo/app/(public)/offers/[id].tsx",
+      "accessCount": 15,
+      "lastAccessed": 1775500650518,
+      "type": "file"
+    },
+    {
+      "path": ".vscode/settings.json",
+      "accessCount": 11,
+      "lastAccessed": 1775519509620,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-fullstack/app/views/home/index.html.erb",
+      "accessCount": 9,
+      "lastAccessed": 1775523050950,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-expo/app/(public)/become-provider.tsx",
+      "accessCount": 6,
+      "lastAccessed": 1775446793374,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-backend/app/routers/jobs.py",
+      "accessCount": 6,
+      "lastAccessed": 1775500613695,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-backend/app/schemas.py",
+      "accessCount": 6,
+      "lastAccessed": 1775500624622,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-expo/services/offers.ts",
+      "accessCount": 6,
+      "lastAccessed": 1775500636811,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-fullstack/app/views/layouts/application.html.erb",
+      "accessCount": 5,
+      "lastAccessed": 1775520654697,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-backend/app/routers/auth.py",
+      "accessCount": 4,
+      "lastAccessed": 1775425307929,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-backend/app/routers/users.py",
+      "accessCount": 4,
+      "lastAccessed": 1775425329280,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-backend/app/models.py",
+      "accessCount": 4,
+      "lastAccessed": 1775500612525,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-backend/app/crud.py",
+      "accessCount": 3,
+      "lastAccessed": 1775425309926,
+      "type": "file"
+    },
+    {
+      "path": ".tool-versions",
+      "accessCount": 3,
+      "lastAccessed": 1775517635788,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-expo/app/(public)/account/signup.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1775423761082,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-expo/services/fakeData.ts",
+      "accessCount": 2,
+      "lastAccessed": 1775425372272,
+      "type": "file"
+    },
+    {
+      "path": ".vscode/extensions.json",
+      "accessCount": 2,
+      "lastAccessed": 1775500370939,
+      "type": "file"
+    },
+    {
+      "path": ".vscode/tasks.json",
+      "accessCount": 2,
+      "lastAccessed": 1775500438308,
+      "type": "file"
+    },
+    {
+      "path": ".claude/settings.local.json",
+      "accessCount": 2,
+      "lastAccessed": 1775500447722,
+      "type": "file"
+    },
+    {
+      "path": "PLANO-ACAO-PRODUTO.md",
+      "accessCount": 2,
+      "lastAccessed": 1775500595326,
+      "type": "file"
+    },
+    {
+      "path": ".rubocop.yml",
+      "accessCount": 2,
+      "lastAccessed": 1775517379754,
+      "type": "file"
+    },
+    {
+      "path": "docs/GAPS-PLANO-ACAO.md",
+      "accessCount": 1,
+      "lastAccessed": 1775419992075,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-expo/app/(public)/signin.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1775420000967,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-expo/services/submitPendingJob.ts",
+      "accessCount": 1,
+      "lastAccessed": 1775420012564,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-expo/components/SigninForm.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1775420016428,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-expo/app/(public)/account/account-edit.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1775420094155,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-expo/app/(public)/account-edit.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1775420102228,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-backend/alembic/versions/b2c3d4e5f6a7_add_job_extra_columns.py",
+      "accessCount": 1,
+      "lastAccessed": 1775420127032,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-backend/migration_helpers.py",
+      "accessCount": 1,
+      "lastAccessed": 1775420174347,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-backend/alembic/versions/70dd7bfa0d5d_add_service_type_to_jobs.py",
+      "accessCount": 1,
+      "lastAccessed": 1775420175266,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-backend/alembic/versions/e5f6a7b8c9d0_add_proposed_job_status.py",
+      "accessCount": 1,
+      "lastAccessed": 1775420716888,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-expo/services/api.ts",
+      "accessCount": 1,
+      "lastAccessed": 1775425230851,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-expo/app/(public)/home.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1775446672210,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-expo/app/(public)/offers/index.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1775446684668,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-backend/app/address_utils.py",
+      "accessCount": 1,
+      "lastAccessed": 1775446685249,
+      "type": "file"
+    },
+    {
+      "path": ".cursor/rules/backend-docker.mdc",
+      "accessCount": 1,
+      "lastAccessed": 1775496352416,
+      "type": "file"
+    },
+    {
+      "path": ".cursor/rules/hardhat-project.mdc",
+      "accessCount": 1,
+      "lastAccessed": 1775496352812,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-expo/package.json",
+      "accessCount": 1,
+      "lastAccessed": 1775496383461,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-expo/tailwind.config.js",
+      "accessCount": 1,
+      "lastAccessed": 1775496383905,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-backend/requirements.txt",
+      "accessCount": 1,
+      "lastAccessed": 1775496386898,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-backend/app/routers/admin.py",
+      "accessCount": 1,
+      "lastAccessed": 1775500619588,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-backend/app/dependencies.py",
+      "accessCount": 1,
+      "lastAccessed": 1775500650967,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-expo/app/(public)/account/my-jobs.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1775500654597,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-backend",
+      "accessCount": 1,
+      "lastAccessed": 1775500655718,
+      "type": "directory"
+    },
+    {
+      "path": "hardhat-fullstack/app/controllers/home_controller.rb",
+      "accessCount": 1,
+      "lastAccessed": 1775517227328,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-fullstack/app/assets/tailwind/application.css",
+      "accessCount": 1,
+      "lastAccessed": 1775517243181,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-fullstack/app/javascript/controllers/hello_controller.js",
+      "accessCount": 1,
+      "lastAccessed": 1775517243465,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-fullstack/app/javascript/controllers/nav_controller.js",
+      "accessCount": 1,
+      "lastAccessed": 1775517262933,
+      "type": "file"
+    },
+    {
+      "path": "hardhat-fullstack/Gemfile",
+      "accessCount": 1,
+      "lastAccessed": 1775517384037,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}
