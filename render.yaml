@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: default-settings-mcp
+    runtime: node
+    plan: free
+    buildCommand: npm run build
+    startCommand: MCP_MODE=http npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MCP_MODE
+        value: http
