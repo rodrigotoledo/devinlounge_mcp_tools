@@ -4,7 +4,7 @@ services:
     runtime: node
     plan: free
     buildCommand: npm install --include=dev && npm run build
-    startCommand: MCP_MODE=http node dist/index.js
+    startCommand: npm run start:render
     healthCheckPath: /health
     rootDir: .
     envVars:
