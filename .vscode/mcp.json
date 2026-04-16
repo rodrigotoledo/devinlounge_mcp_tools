@@ -2,9 +2,7 @@
   "servers": {
     "io.github.github/github-mcp-server": {
       "type": "http",
-      "url": "https://api.githubcopilot.com/mcp/",
-      "gallery": "https://api.mcp.github.com",
-      "version": "0.33.0"
+      "url": "https://api.githubcopilot.com/mcp/"
     },
     "io.github.ChromeDevTools/chrome-devtools-mcp": {
       "type": "stdio",
@@ -13,27 +11,15 @@
         "--registry",
         "https://registry.npmjs.org",
         "chrome-devtools-mcp@0.21.0"
-      ],
-      "gallery": "https://api.mcp.github.com",
-      "version": "0.21.0"
+      ]
     },
     "devinlounge-mcp-tools": {
-      "type": "sse",
+      "type": "http",
       "url": "https://devinlounge-mcp-tools.onrender.com/mcp",
-      "timeout": 30000,
       "headers": {
         "Accept": "text/event-stream",
-        "Cache-Control": "no-cache",
-        "Authorization": "Bearer ${input:Authorization}"
+        "Cache-Control": "no-cache"
       }
     }
-  },
-  "inputs": [
-    {
-      "id": "Authorization",
-      "type": "promptString",
-      "description": "Authentication token (PAT or App token)",
-      "password": true
-    }
-  ]
+  }
 }
