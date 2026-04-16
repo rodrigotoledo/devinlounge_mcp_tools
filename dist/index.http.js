@@ -10,7 +10,13 @@ const serverName = 'default-settings-mcp';
 // Armazena sessões ativas
 const transports = {};
 const app = express();
-app.use(express.json());
+app.use((req, res, next) => {
+    if (req.path === '/messages') {
+        next();
+        return;
+    }
+    express.json()(req, res, next);
+});
 // Função para criar um novo servidor MCP com os handlers
 function createMCPServer() {
     const server = new Server({

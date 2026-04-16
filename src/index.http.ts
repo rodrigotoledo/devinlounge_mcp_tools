@@ -3,10 +3,10 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
 import {
-  CallToolRequestSchema,
-  ListResourcesRequestSchema,
-  ListToolsRequestSchema,
-  ReadResourceRequestSchema,
+    CallToolRequestSchema,
+    ListResourcesRequestSchema,
+    ListToolsRequestSchema,
+    ReadResourceRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 import express from 'express';
 
@@ -20,7 +20,14 @@ const serverName = 'default-settings-mcp';
 const transports: { [sessionId: string]: SSEServerTransport } = {};
 
 const app = express();
-app.use(express.json());
+app.use((req, res, next) => {
+  if (req.path === '/messages') {
+    next();
+    return;
+  }
+
+  express.json()(req, res, next);
+});
 
 // Função para criar um novo servidor MCP com os handlers
 function createMCPServer(): Server {
