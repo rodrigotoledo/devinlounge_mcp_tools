@@ -223,7 +223,7 @@
   "workbench.editor.enablePreview": false,
   "workbench.editor.showTabs": "multiple",
   "workbench.tree.indent": 20,
-  "workbench.colorTheme": "Default Dark Modern",
+  "workbench.colorTheme": "Dark Modern",
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   "_comment_prettier": "Prettier formats TypeScript/JavaScript automatically on save. Configure via .prettierrc.json in root",
