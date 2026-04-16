@@ -6,6 +6,7 @@ services:
     buildCommand: npm install --include=dev && npm run build
     startCommand: MCP_MODE=http node dist/index.js
     healthCheckPath: /health
+    rootDir: .
     envVars:
       - key: NODE_ENV
         value: production
