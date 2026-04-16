@@ -93,7 +93,7 @@ function railsBootstrap(args: BootstrapArgs): string {
     '# Rails bootstrap',
     '',
     'Ask these decisions before creating the project:',
-    `- auth: ${authentication} (devise only if explicitly requested)` ,
+    `- auth: ${authentication} (bcrypt or OAuth strategy)` ,
     `- authorization: ${authorization}`,
     `- styling: ${styling}`,
     `- background jobs: ${backgroundJobs}`,
@@ -144,7 +144,7 @@ function railsBootstrap(args: BootstrapArgs): string {
     '# inter-service networking: from containers use service DNS, e.g. http://api:8000, never localhost',
     '```',
     '',
-    'Rules: RSpec only, request specs preferred, path helpers in specs, do not assume devise, ask gem decisions first.',
+    'Rules: RSpec only, request specs preferred, path helpers in specs, do not use devise in template defaults, ask gem decisions first.',
   ].join('\n');
 }
 

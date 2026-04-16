@@ -15,7 +15,7 @@ These rules guide Cursor's behavior in this polyglot codebase. They ensure consi
 
 Before creating or scaffolding a Rails project, ask the gem-relevant decisions first instead of assuming them:
 
-- authentication: `bcrypt`, `devise` only if explicit, or OAuth
+- authentication: `bcrypt` or OAuth
 - authorization: `cancancan`, `pundit`, or none
 - styling: `tailwindcss-rails` or `simplecss`
 - background jobs: `solid_queue` or `sidekiq`
@@ -30,7 +30,7 @@ Ask these follow-ups when the project needs them:
 - auditing/versioning: `paper_trail` or `audited`
 - multi-tenancy: `acts_as_tenant`
 
-Do not assume `devise`, do not keep Minitest as the active workflow, and keep `rspec-rails` + `simplecov` as the Rails baseline.
+Do not use `devise` in this template default flow, do not keep Minitest as the active workflow, and keep `rspec-rails` + `simplecov` as the Rails baseline.
 
 ## 📋 Elixir/Phoenix Code Style
 
@@ -228,7 +228,7 @@ end
 - **Structure:** Standard Rails conventions. Models for DB logic, controllers for requests, views for presentation.
 - **Helpers:** Use for view-specific logic (labels, CSS classes, display rules). Keep them small.
 - **Scaffolding decisions first:** Before generating Rails auth/layout code, ask for auth (`bcrypt`), authorization (`cancancan` or `pundit`), and CSS (`tailwindcss-rails` or `simplecss`).
-- **Auth default:** Do not assume `devise` unless explicitly requested.
+- **Auth default:** Do not use `devise` in this template default flow.
 - **Testing stack:** Always install and configure `rspec-rails`, `shoulda-matchers`, and `guard-rspec`. No Minitest.
 - **Spec style:** Prefer request specs over controller specs for Rails endpoint behavior.
 - **Routes in tests:** Use route/path helpers (`root_path`, `user_path(user)`) instead of hardcoded `"/users/1"` strings.

@@ -101,15 +101,16 @@ These instructions guide GitHub Copilot (and other AI assistants integrated via 
 
 **Copilot should:**
 - Suggest: `docker compose exec fullstack …` for all runtime tasks
+- Ensure every Rails project includes `docker-compose.yml` (at minimum app + database services)
 - Ensure a default response exists immediately after scaffold (`root 'home#index'` for HTML-first or `/health` JSON for API-heavy)
 - Recommend Rails conventions: models ↔ DB, controllers ↔ requests, views ↔ HTML
 - Suggest helpers for view-specific logic
 - When creating a new Rails app, suggest `bin/rails new ... --skip-test`
 - After app creation, install/configure `rspec-rails`, `shoulda-matchers`, `simplecov`, and `guard-rspec`
 - Suggest `bin/rails generate rspec:install`, `bundle exec guard init rspec`, and removing `test/` when present
-- Before scaffolding, ask the gem decisions first: auth (`bcrypt`, `devise` only if explicit, or OAuth), authorization (`cancancan`, `pundit`, or none), CSS (`tailwindcss-rails` or `simplecss`), background jobs (`solid_queue` or `sidekiq`), pagination (`pagy` or `kaminari`), and whether the app is HTML-first or API-heavy (`jbuilder` / `blueprinter` only when needed)
+- Before scaffolding, ask the gem decisions first: auth (`bcrypt` or OAuth), authorization (`cancancan`, `pundit`, or none), CSS (`tailwindcss-rails` or `simplecss`), background jobs (`solid_queue` or `sidekiq`), pagination (`pagy` or `kaminari`), and whether the app is HTML-first or API-heavy (`jbuilder` / `blueprinter` only when needed)
 - Ask follow-up gem questions when relevant: search (`ransack` or `pg_search`), uploads (Active Storage / `image_processing` / `shrine`), admin (`activeadmin` / `avo`), auditing (`paper_trail` / `audited`), and multi-tenancy (`acts_as_tenant`)
-- Do not default to `devise` unless explicitly requested
+- Do not use `devise` in this template default flow
 - **Reject** Minitest; use **RSpec only**
 - Prefer **request specs** over controller specs in Rails
 - Prefer route/path helpers (`root_path`, `user_path(user)`) over hardcoded route strings in specs

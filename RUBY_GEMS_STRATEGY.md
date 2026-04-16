@@ -10,7 +10,7 @@ Best practices and recommended gems for Ruby projects across different domains a
 |----------|---------|--------------|------------|
 | **Web Framework** | HTTP server, routing, middleware | Rails, Sinatra, Hanami | Full-stack applications |
 | **Database** | Data persistence, ORM | ActiveRecord, Sequel, DataMapper | Any data-driven application |
-| **Authentication** | User identity, sessions | bcrypt, devise, omniauth | User management |
+| **Authentication** | User identity, sessions | bcrypt, rodauth, omniauth | User management |
 | **Authorization** | Access control, permissions | pundit, cancancan, rolify | Role-based features |
 | **API Building** | REST/GraphQL endpoints, serialization | blueprinter, fast_jsonapi, graphql | API services |
 | **Testing** | Test frameworks, factories, mocks | rspec, minitest, factory_bot | Quality assurance |
@@ -28,6 +28,41 @@ Best practices and recommended gems for Ruby projects across different domains a
 ---
 
 ## 🎯 Core Ruby Gems by Use Case
+
+## 🐳 Rails Docker Compose Baseline (Mandatory)
+
+For this template, every Rails project must include and use Docker Compose from day 1.
+
+```yaml
+# docker-compose.yml (minimal Rails baseline)
+services:
+  fullstack:
+    build: ./backend-rails
+    command: bin/rails server -b 0.0.0.0 -p 3000
+    volumes:
+      - ./backend-rails:/rails
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:16
+
+  redis:
+    image: redis:7
+```
+
+Run all Rails tasks through Compose:
+
+```bash
+docker compose exec fullstack bundle install
+docker compose exec fullstack bin/rails db:migrate
+docker compose exec fullstack bin/rspec
+```
+
+Do not use host `bundle`, `rails`, or `rspec` for composed Rails apps unless explicitly opted out.
 
 ### Web Framework
 
@@ -70,7 +105,7 @@ gem 'sequel', '~> 5.0'       # Alternative lightweight ORM
 
 **Database Tools**
 ```ruby
-gem 'pagy', '~> 9.0'         # Pagination (fast, lightweight)
+gem 'pagy', '~> 43.5'        # Pagination (fast, lightweight)
 gem 'kaminari'               # Alternative pagination
 gem 'ransack'                # Search & filtering
 gem 'paranoia'               # Soft deletes
@@ -84,15 +119,15 @@ gem 'migrations'             # Migration management
 
 **Authentication (Choose One)**
 ```ruby
-gem 'bcrypt', '~> 3.1.7'     # Password hashing (minimal)
-gem 'devise'                 # Full-featured auth system
-gem 'rodauth'                # Lightweight, secure auth
-gem 'warden'                 # Low-level authentication
+gem 'bcrypt', '~> 3.1.22'    # Password hashing (default in this template)
+gem 'rodauth'                # Lightweight, secure auth framework
+gem 'omniauth'               # OAuth provider integration
+gem 'oauth2'                 # OAuth 2.0 client
 ```
 
 **Authorization**
 ```ruby
-gem 'pundit', '~> 2.4'       # Policy-based authorization
+gem 'pundit', '~> 2.5'       # Policy-based authorization
 gem 'cancancan'              # Role-based access control (RBAC)
 gem 'rolify', '~> 6.0'       # Dynamic role management
 ```
@@ -173,7 +208,7 @@ gem 'database_cleaner-active_record'  # Clean test DB
 
 **Linting**
 ```ruby
-gem 'rubocop', '~> 1.60'            # Ruby linter
+gem 'rubocop', '~> 1.86'            # Ruby linter
 gem 'rubocop-rails'                 # Rails-specific rules
 gem 'rubocop-rails-omakase'         # DHH recommended style
 gem 'rubocop-rspec'                 # RSpec linting
@@ -239,7 +274,7 @@ gem 'actionpack-page_caching' # Full-page caching
 
 **Job Processors (Choose One)**
 ```ruby
-gem 'sidekiq', '~> 7.0'      # High-performance job processor
+gem 'sidekiq', '~> 8.1'      # High-performance job processor
 gem 'good_job'               # Active Job based, no Redis
 gem 'solid_queue'            # Rails 8 built-in, PostgreSQL-backed
 gem 'delayed_job'            # Lightweight, database-backed
@@ -456,7 +491,6 @@ gem 'tailwindcss-rails'
 
 # Authentication & Authorization
 gem 'bcrypt'
-gem 'devise'
 gem 'pundit'
 gem 'rolify'
 
@@ -469,7 +503,6 @@ gem 'pagy'
 # File Upload
 gem 'shrine'
 gem 'aws-sdk-s3'
-gem 'image_processing'
 
 # Caching
 gem 'solid_cache'
@@ -480,7 +513,6 @@ gem 'solid_queue'
 
 # Utilities
 gem 'friendly_id'
-gem 'pagy'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -549,7 +581,7 @@ When choosing a gem, consider:
 
 | Gem | Issue | Alternative |
 |-----|-------|------------|
-| `devise` (on APIs) | Too much overhead for stateless auth | `bcrypt` + JWT |
+| `devise` (in this template) | Adds generator-heavy coupling and setup overhead | `bcrypt` + `pundit` + optional OAuth (`omniauth`) |
 | `grape` (if Rails exists) | Adds complexity, duplicate framework | Use Rails |
 | `will_paginate` | Less efficient than newer alternatives | `pagy` |
 | `simple_form` (if CSS framework used) | Extra abstraction layer | Tailwind directly |
@@ -645,8 +677,9 @@ bundle audit check
 - [ ] Choose web framework (Rails, Sinatra, Hanami)
 - [ ] Select database adapter (pg for PostgreSQL)
 - [ ] For Rails, install `rspec-rails` and `simplecov`
-- [ ] Choose authentication method (bcrypt, devise, rodauth)
+- [ ] Choose authentication method (bcrypt, rodauth, or OAuth via omniauth)
 - [ ] Select authorization library (pundit, cancancan)
+- [ ] Ensure Rails project has `docker-compose.yml` and run all Rails tasks via `docker compose exec fullstack ...`
 - [ ] Pick serializer (blueprinter, fast_jsonapi)
 - [ ] Configure linting (rubocop, rufo, erb_lint)
 - [ ] Set up security scanning (brakeman, bundler-audit)

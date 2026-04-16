@@ -368,7 +368,7 @@ docker compose exec fullstack bin/brakeman -i SQL,CommandInjection
   - SelectVulnerability
 
 :skip_files:
-  - config/initializers/devise.rb
+  - config/initializers/authentication.rb
   - app/controllers/admin_controller.rb
 
 :safe_methods:

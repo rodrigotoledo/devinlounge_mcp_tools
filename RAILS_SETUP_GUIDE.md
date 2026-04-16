@@ -2,6 +2,8 @@
 
 Configuration for Rails 8+ with RSpec, RuboCop, Rufo, SimpleCov, and recommended gems.
 
+**Docker baseline:** every Rails project in this template must include a `docker-compose.yml` and run Rails commands via `docker compose exec fullstack ...`.
+
 **Rails testing baseline:** every Rails project should install and configure `rspec-rails` and `simplecov`, run tests with RSpec, and avoid Minitest as the active project workflow.
 
 **Why Rails still creates Minitest by default:** `rails new` ships with the Rails default test stack unless you explicitly skip it. MCP can guide an AI agent, but it does not change the native behavior of the Rails generator itself.
@@ -16,7 +18,6 @@ Before running `rails new`, always define these decisions:
 
 1. **Authentication approach**
   - `bcrypt` + custom sessions (default in this template)
-  - `devise` only if explicitly requested
   - external/OAuth provider
 2. **Authorization library**
   - `cancancan` (ability-based)
@@ -138,13 +139,13 @@ gem 'rack-cors'
 gem 'bcrypt', '~> 3.1.7'
 # Choose one authorization library:
 # gem 'cancancan', '~> 3.6'
-# gem 'pundit', '~> 2.4'
+# gem 'pundit', '~> 2.5'
 
 # Multi-tenancy
 gem 'acts_as_tenant', '~> 0.6'
 
 # Data handling
-gem 'pagy', '~> 9.0'           # Pagination
+gem 'pagy', '~> 43.5'          # Pagination
 gem 'ransack'                  # Search/filtering
 gem 'image_processing', '~> 1.2' # Image resizing
 
@@ -167,7 +168,7 @@ group :development, :test do
   gem 'prosopite', require: false              # N+1 detection
 
   # Testing
-  gem 'rspec-rails', '~> 7.0'            # Required Rails test framework
+  gem 'rspec-rails', '~> 8.0'            # Required Rails test framework
   gem 'rails-controller-testing'
   gem 'factory_bot_rails', '~> 6.4'
   gem 'faker', '~> 3.5'

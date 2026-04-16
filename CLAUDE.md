@@ -166,6 +166,8 @@ docker compose exec api mypy app/
 ### Rails (Docker)
 
 ```bash
+# Rails projects in this template must include docker-compose.yml and run via compose
+
 # Create a new Rails app without Minitest
 docker compose exec fullstack bin/rails new my_app --skip-test
 
@@ -211,7 +213,7 @@ docker compose exec fullstack bin/rubocop
 docker compose exec fullstack bin/erb-lint
 ```
 
-Rails projects must use `rspec-rails` as the only test framework and `simplecov` as the default coverage tool. Keep `shoulda-matchers` and `guard-rspec` installed/configured in Rails projects. Do not keep Minitest as the active Rails testing workflow. Do not assume `devise`; prefer decision-first setup with `bcrypt` + (`cancancan` or `pundit`) and explicit CSS choice (`tailwindcss-rails` or `simplecss`). Before generating app features, also ask about background jobs, pagination, API serialization, and other gem-dependent choices such as search, uploads, admin/backoffice, auditing, and multi-tenancy when relevant.
+Rails projects must use `rspec-rails` as the only test framework and `simplecov` as the default coverage tool. Keep `shoulda-matchers` and `guard-rspec` installed/configured in Rails projects. Do not keep Minitest as the active Rails testing workflow. Do not use `devise` in this template default flow; prefer decision-first setup with `bcrypt` + (`cancancan` or `pundit`) and optional OAuth only when needed, plus explicit CSS choice (`tailwindcss-rails` or `simplecss`). Before generating app features, also ask about background jobs, pagination, API serialization, and other gem-dependent choices such as search, uploads, admin/backoffice, auditing, and multi-tenancy when relevant.
 
 ### Phoenix (Docker)
 
