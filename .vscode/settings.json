@@ -3,13 +3,15 @@
   "editor.insertSpaces": true,
   "editor.detectIndentation": false,
   "editor.formatOnSave": true,
-  "editor.rulers": [100],
+  "editor.rulers": [
+    100
+  ],
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
   "editor.stickyScroll.enabled": true,
   "editor.linkedEditing": true,
   "editor.wordWrap": "on",
-  "editor.minimap.enabled": true,
+  "editor.minimap.enabled": false,
   "editor.quickSuggestions": {
     "other": true,
     "comments": false,
@@ -102,14 +104,34 @@
   "typescript.preferences.importModuleSpecifierEnding": "minimal",
   "javascript.preferences.importModuleSpecifierEnding": "minimal",
   "tailwindCSS.experimental.classRegex": [
-    ["cva\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
-    ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
-    ["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
-    ["className=[{\"'`]([^\"'`}]*)[\"'`}]"],
-    ["classNamePattern='([^']*)'"],
-    ["className={'([^'}]*)'}"],
-    ["styleName=[{\"'`]([^\"'`}]*)[\"'`}]"],
-    ["nativewind\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+    [
+      "cva\\(([^)]*)\\)",
+      "(?:'|\"|`)([^']*)(?:'|\"|`)"
+    ],
+    [
+      "clsx\\(([^)]*)\\)",
+      "(?:'|\"|`)([^']*)(?:'|\"|`)"
+    ],
+    [
+      "cn\\(([^)]*)\\)",
+      "(?:'|\"|`)([^']*)(?:'|\"|`)"
+    ],
+    [
+      "className=[{\"'`]([^\"'`}]*)[\"'`}]"
+    ],
+    [
+      "classNamePattern='([^']*)'"
+    ],
+    [
+      "className={'([^'}]*)'}"
+    ],
+    [
+      "styleName=[{\"'`]([^\"'`}]*)[\"'`}]"
+    ],
+    [
+      "nativewind\\(([^)]*)\\)",
+      "(?:'|\"|`)([^']*)(?:'|\"|`)"
+    ]
   ],
   "tailwindCSS.includeLanguages": {
     "typescript": "javascript",

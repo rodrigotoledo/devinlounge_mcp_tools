@@ -10,6 +10,12 @@ This is the source of truth for repository layout, Docker rules, code style, and
 
 Working directory: **repo root** (where `docker-compose.yml` lives). Use `docker compose exec <service>` when containers are running, or `docker compose run --rm <service>` for one-shots.
 
+During development, Docker Compose services should mount the local source directories so file changes on the host are reflected inside containers automatically.
+
+Inter-service networking rule: from inside containers, call dependencies by Docker Compose service name (for example `http://api:8000`, `http://nestjs:3001`, `http://fullstack:3000`) and never by `localhost`. `localhost` is only for host/browser access to published ports.
+
+Starter output rule (all frameworks): after scaffold, create at least one default working output immediately (HTML home route/screen or JSON health endpoint).
+
 Do not run directly on the host:
 - ❌ `npm install`, `npm run build` (Node services)
 - ❌ `bundle install`, `rails`, `rspec`, `rubocop` (Rails)
@@ -160,8 +166,35 @@ docker compose exec api mypy app/
 ### Rails (Docker)
 
 ```bash
+# Create a new Rails app without Minitest
+docker compose exec fullstack bin/rails new my_app --skip-test
+
+# Decide before scaffolding auth/UI:
+# - auth: bcrypt
+# - authorization: cancancan or pundit
+# - styling: tailwindcss-rails or simplecss
+# - background jobs: solid_queue or sidekiq
+# - pagination: pagy or kaminari
+# - rendering style: HTML-first or JSON/API-first
+# - if relevant: search (ransack / pg_search), uploads (Active Storage / image_processing / shrine), admin (activeadmin / avo), auditing (paper_trail / audited), multi-tenancy (acts_as_tenant)
+
 # Install gems
 docker compose exec fullstack bundle install
+
+# Required Rails test stack
+docker compose exec fullstack bundle add rspec-rails --group "development,test"
+docker compose exec fullstack bundle add shoulda-matchers --group "test"
+docker compose exec fullstack bundle add simplecov --group "test"
+docker compose exec fullstack bundle add guard-rspec --group "development,test"
+docker compose exec fullstack bin/rails generate rspec:install
+docker compose exec fullstack bundle exec guard init rspec
+docker compose exec fullstack rm -rf test/
+
+# Auth/authorization (choose what was decided)
+docker compose exec fullstack bundle add bcrypt
+docker compose exec fullstack bundle add cancancan
+# or
+docker compose exec fullstack bundle add pundit
 
 # Migrations & schema
 docker compose exec fullstack bin/rails db:migrate
@@ -177,6 +210,8 @@ docker compose exec fullstack bin/rails console
 docker compose exec fullstack bin/rubocop
 docker compose exec fullstack bin/erb-lint
 ```
+
+Rails projects must use `rspec-rails` as the only test framework and `simplecov` as the default coverage tool. Keep `shoulda-matchers` and `guard-rspec` installed/configured in Rails projects. Do not keep Minitest as the active Rails testing workflow. Do not assume `devise`; prefer decision-first setup with `bcrypt` + (`cancancan` or `pundit`) and explicit CSS choice (`tailwindcss-rails` or `simplecss`). Before generating app features, also ask about background jobs, pagination, API serialization, and other gem-dependent choices such as search, uploads, admin/backoffice, auditing, and multi-tenancy when relevant.
 
 ### Phoenix (Docker)
 
@@ -289,7 +324,8 @@ Each service directory has its own `.env.example`:
 - **Linter:** RuboCop
 - **Formatter:** Built-in (same tool)
 - **Linter for ERB:** erb-lint
-- **Tests:** RSpec only (no Minitest)
+- **Tests:** `rspec-rails` only (no Minitest)
+- **Coverage:** `simplecov` in every Rails project
 - **Do NOT assert exact error messages.** Assert behavior: `expect(record).not_to be_valid`, `expect(record.errors[:email]).to be_present`, `expect(flash[:notice]).to be_present`.
 - **Run via Docker:** `docker compose exec fullstack bin/rspec`, `docker compose exec fullstack bin/rubocop`
 

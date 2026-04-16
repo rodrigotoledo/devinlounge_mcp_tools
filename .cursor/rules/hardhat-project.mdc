@@ -1,9 +1,11 @@
 ---
-description: Hardhat monorepo layout and stacks for Cursor agent
+description: Hardhat stack profile aliases for Cursor agent
 alwaysApply: true
 ---
 
 # Hardhat workspace
+
+`hardhat-*` labels are instruction profile aliases (Expo, backend API, and Rails fullstack), not a single Expo-only project name.
 
 - **`hardhat-expo/`** — Expo Router app (React Native, NativeWind/Tailwind, TypeScript strict). Run scripts from this folder (`npm run typecheck`, `expo start`).
 - **`hardhat-backend/`** — FastAPI + SQLAlchemy (Python). **All** API run/install/Python commands go through **Docker Compose at the repo root** (`docker compose exec api …` / `run --rm api …`). Env: `hardhat-backend/.env`. See rule **backend-docker** and **`CLAUDE.md`**.
@@ -19,7 +21,12 @@ alwaysApply: true
 
 ### Rails tests (`hardhat-fullstack/`)
 
+- For brand-new Rails apps, generate with `bin/rails new ... --skip-test`, then install/configure `rspec-rails`, `shoulda-matchers`, `simplecov`, and `guard-rspec`.
+- Before Rails auth/layout scaffolding, ask: auth with `bcrypt`, authorization with `cancancan` or `pundit`, and styling with `tailwindcss-rails` or `simplecss`.
+- Do not assume `devise` by default.
 - **RSpec only** (`spec/`, `bin/rspec` via Compose `fullstack`); do not default to Minitest for app tests.
+- Prefer **request specs** over controller specs.
+- Use route/path helpers (`root_path`, `user_path(user)`) instead of hardcoded route strings in specs.
 - **Never assert equality on full error or flash message strings** — they are brittle (copy/i18n). Use validity/`errors` details or key presence; for flash, assert **that** `:notice` / `:alert` is present (or missing), not the exact text.
 - **Models**: prefer validation / invalid state (`be_valid`, `errors.added?`, `errors[:attr].present?`), not matching message text.
 - **Controllers / requests**: status, redirects, side effects, flash **presence**; not flash copy. See **`CLAUDE.md`** (Testing — hardhat-fullstack).

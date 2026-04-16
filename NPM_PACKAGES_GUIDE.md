@@ -10,8 +10,9 @@ Best practices and recommended packages for JavaScript/TypeScript projects acros
 |----------|---------|------------------|------------|
 | **Core Framework** | Application framework | react, next, expo | Application foundation |
 | **Routing** | Navigation, URL handling | react-router, next/router, expo-router | Multi-screen apps |
-| **State Management** | Global state | zustand, jotai, redux | Shared state needs |
-| **HTTP & API** | Backend communication | axios, fetch, react-query, swr | Data fetching |
+| **State Management** | Client/UI state | zustand, jotai | Shared local state needs |
+| **Server State** | API cache and synchronization | @tanstack/react-query | Default for React/Expo API data |
+| **HTTP & API** | Backend communication | axios, fetch | Transport layer |
 | **Styling** | CSS framework, utilities | tailwindcss, nativewind, styled-components | UI styling |
 | **UI Components** | Pre-built components | shadcn/ui, react-native-paper | Component library |
 | **Form Handling** | Form validation, management | react-hook-form, formik, zod | User input |
@@ -53,8 +54,7 @@ Best practices and recommended packages for JavaScript/TypeScript projects acros
 {
   "dependencies": {
     "axios": "^1.6.0",
-    "@tanstack/react-query": "^5.0.0",
-    "swr": "^2.2.0"
+    "@tanstack/react-query": "^5.0.0"
   }
 }
 ```
@@ -106,6 +106,76 @@ Best practices and recommended packages for JavaScript/TypeScript projects acros
     "eslint-plugin-react": "^7.33.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-import": "^2.29.0"
+  }
+}
+```
+
+---
+
+### 📱 Expo Only (React Native)
+
+## ✅ MVP Defaults (Recommended)
+
+Use these as the default baseline when starting new projects (high impact, low complexity).
+
+### FastAPI (Python API)
+
+> FastAPI dependencies are not managed via npm, but this is the aligned baseline for backend APIs used by React/Expo apps.
+
+- `pydantic` + `pydantic-settings` for schema and typed config
+- `sqlalchemy` (2.x async) + `alembic` for persistence/migrations
+- `pytest` for request/integration tests
+- `ruff` + `mypy` for linting/type checks
+
+### React SPA (Vite)
+
+```json
+{
+  "dependencies": {
+    "@tanstack/react-query": "^5.0.0",
+    "react-hook-form": "^7.50.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "vitest": "^1.0.0"
+  }
+}
+```
+
+### Next.js (App Router)
+
+```json
+{
+  "dependencies": {
+    "next": "^15.0.0",
+    "@tanstack/react-query": "^5.0.0",
+    "react-hook-form": "^7.50.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3",
+    "jest": "^29.7.0"
+  }
+}
+```
+
+### NestJS (API)
+
+> NestJS dependencies are not frontend npm packages, but this is the aligned backend baseline for projects in this template.
+
+- `class-validator` + `class-transformer` for DTO validation
+- `@nestjs/swagger` + `swagger-ui-express` for API contracts
+- `jest` + `supertest` for unit/e2e testing
+
+### Expo (React Native)
+
+```json
+{
+  "dependencies": {
+    "expo-router": "^2.0.0",
+    "nativewind": "^4.0.1",
+    "expo-secure-store": "^12.8.0"
   }
 }
 ```
@@ -342,7 +412,9 @@ Best practices and recommended packages for JavaScript/TypeScript projects acros
 
 ## 📦 Detailed Package Recommendations
 
-### State Management (Choose One)
+### State Management (Client/UI State)
+
+For server/API state, use **TanStack Query** as the default in React and Expo projects.
 
 **Zustand** (Recommended for simplicity)
 ```json
@@ -369,19 +441,9 @@ Best practices and recommended packages for JavaScript/TypeScript projects acros
 - Built-in async support
 - Good for complex state
 
-**Redux Toolkit** (Full-featured)
-```json
-{
-  "dependencies": {
-    "@reduxjs/toolkit": "^1.9.0",
-    "react-redux": "^8.1.0",
-    "redux": "^4.2.0"
-  }
-}
-```
-- Production-proven
-- Large ecosystem
-- More boilerplate
+**Redux Toolkit** (Only when explicitly required)
+
+Not a default in this template. Use only when a project explicitly requests Redux.
 
 **Context API** (Built-in)
 ```
@@ -407,17 +469,7 @@ Best practices and recommended packages for JavaScript/TypeScript projects acros
 - Powerful DevTools
 - Best for API data
 
-**SWR** (Alternative, from Vercel)
-```json
-{
-  "dependencies": {
-    "swr": "^2.2.0"
-  }
-}
-```
-- Lightweight alternative
-- Good for simple fetching
-- Built-in caching
+SWR is optional, but this template defaults to **TanStack Query** for server-state.
 
 **Axios** (HTTP client)
 ```json

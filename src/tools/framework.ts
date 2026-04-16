@@ -8,14 +8,31 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.join(__dirname, '../../');
 
 const frameworkGuides: Record<string, string[]> = {
-  rails: ['RAILS_SETUP_GUIDE.md', 'TURBO_RAILS_PATTERNS.md'],
-  nestjs: ['CLAUDE.md'],
+  rails: [
+    'AGENTS.md',
+    'CLAUDE.md',
+    '.copilot/instructions.md',
+    '.cursor/rules.md',
+    'RAILS_SETUP_GUIDE.md',
+    'TURBO_RAILS_PATTERNS.md',
+  ],
+  nestjs: ['CLAUDE.md', 'NESTJS_SETUP_GUIDE.md'],
   fastapi: ['CLAUDE.md'],
   phoenix: ['PHOENIX_ELIXIR_SETUP.md'],
-  nextjs: ['CLAUDE.md', 'NPM_PACKAGES_GUIDE.md'],
+  nextjs: ['CLAUDE.md', 'NEXTJS_SETUP_GUIDE.md', 'NPM_PACKAGES_GUIDE.md'],
   react: ['CLAUDE.md', 'NPM_PACKAGES_GUIDE.md'],
   expo: ['REACT_NATIVE_SETUP.md', 'NPM_PACKAGES_GUIDE.md'],
-  all: ['CLAUDE.md', 'RAILS_SETUP_GUIDE.md', 'REACT_NATIVE_SETUP.md', 'PHOENIX_ELIXIR_SETUP.md'],
+  all: [
+    'AGENTS.md',
+    'CLAUDE.md',
+    '.copilot/instructions.md',
+    '.cursor/rules.md',
+    'RAILS_SETUP_GUIDE.md',
+    'NEXTJS_SETUP_GUIDE.md',
+    'NESTJS_SETUP_GUIDE.md',
+    'REACT_NATIVE_SETUP.md',
+    'PHOENIX_ELIXIR_SETUP.md',
+  ],
 };
 
 export async function getFrameworkGuide(args: {

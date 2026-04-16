@@ -6,6 +6,7 @@ type ToolResponse = { content: Array<{ type: 'text'; text: string }> };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.join(__dirname, '../../');
+const alwaysIncludedFiles = ['AGENTS.md', 'CLAUDE.md', '.copilot/instructions.md', '.cursor/rules.md'];
 
 export async function searchDocumentation(args: {
   query: string;
@@ -26,7 +27,9 @@ export async function searchDocumentation(args: {
   }
 
   const files = await fs.readdir(projectRoot);
-  const markdownFiles = files.filter((file) => file.endsWith('.md'));
+  const markdownFiles = Array.from(
+    new Set([...files.filter((file) => file.endsWith('.md')), ...alwaysIncludedFiles])
+  );
 
   const matches: Array<{ file: string; lineNumber: number; line: string }> = [];
 

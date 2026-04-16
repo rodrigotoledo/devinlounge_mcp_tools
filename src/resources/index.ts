@@ -8,9 +8,27 @@ const docsDir = path.join(__dirname, '../../');
 
 const availableResources = [
   {
+    uri: 'doc://agents.md',
+    name: 'AGENTS.md - Agent Instructions',
+    description: 'Top-level instructions for AI agents, including Rails and Docker rules',
+    mimeType: 'text/markdown',
+  },
+  {
     uri: 'doc://claude.md',
     name: 'CLAUDE.md - Core Project Rules',
     description: 'Complete project configuration, Docker rules, code style, and editor setup',
+    mimeType: 'text/markdown',
+  },
+  {
+    uri: 'doc://copilot-instructions.md',
+    name: '.copilot/instructions.md - Copilot Rules',
+    description: 'GitHub Copilot-specific rules and per-service guidance',
+    mimeType: 'text/markdown',
+  },
+  {
+    uri: 'doc://cursor-rules.md',
+    name: '.cursor/rules.md - Cursor Rules',
+    description: 'Cursor-specific coding and workflow rules',
     mimeType: 'text/markdown',
   },
   {
@@ -29,6 +47,18 @@ const availableResources = [
     uri: 'doc://rails-setup.md',
     name: 'RAILS_SETUP_GUIDE.md',
     description: 'Rails 8 gems, RSpec, SimpleCov, RuboCop configuration',
+    mimeType: 'text/markdown',
+  },
+  {
+    uri: 'doc://nextjs-setup.md',
+    name: 'NEXTJS_SETUP_GUIDE.md',
+    description: 'Next.js App Router MVP setup with TanStack Query and forms baseline',
+    mimeType: 'text/markdown',
+  },
+  {
+    uri: 'doc://nestjs-setup.md',
+    name: 'NESTJS_SETUP_GUIDE.md',
+    description: 'NestJS modular MVP setup with validation, Swagger, and tests baseline',
     mimeType: 'text/markdown',
   },
   {
@@ -88,10 +118,15 @@ const availableResources = [
 ];
 
 const fileMapping: Record<string, string> = {
+  'doc://agents.md': 'AGENTS.md',
   'doc://claude.md': 'CLAUDE.md',
+  'doc://copilot-instructions.md': '.copilot/instructions.md',
+  'doc://cursor-rules.md': '.cursor/rules.md',
   'doc://git-flow.md': 'GIT_FLOW.md',
   'doc://quick-start.md': 'QUICK_START.md',
   'doc://rails-setup.md': 'RAILS_SETUP_GUIDE.md',
+  'doc://nextjs-setup.md': 'NEXTJS_SETUP_GUIDE.md',
+  'doc://nestjs-setup.md': 'NESTJS_SETUP_GUIDE.md',
   'doc://react-native-setup.md': 'REACT_NATIVE_SETUP.md',
   'doc://phoenix-setup.md': 'PHOENIX_ELIXIR_SETUP.md',
   'doc://turbo-rails-patterns.md': 'TURBO_RAILS_PATTERNS.md',

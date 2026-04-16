@@ -9,17 +9,21 @@ These instructions guide GitHub Copilot (and other AI assistants integrated via 
 
 ## 🎯 Core Principles
 
-1. **Docker-First:** All backend service runtime, tests, installs, and migrations must use Docker Compose. Never suggest or run `npm`, `bundle`, `pip`, `mix` directly on the host (except Expo Mobile).
+1. **Docker-First:** All non-Expo service runtime, tests, installs, and migrations must use Docker Compose. Never suggest or run `npm`, `bundle`, `pip`, `mix` directly on the host except for Expo Mobile.
 
-2. **No Abbreviations:** Reject abbreviated identifiers. Suggest `category`, not `cat`; `style`, not `st`. Exceptions: `env`, `pkg`, `db`, `app` in file paths and established library abbreviations.
+2. **Container Networking by Service Name:** For container-to-container calls, always use Compose DNS service names (for example `http://api:8000`, `http://nestjs:3001`), never `localhost`.
 
-3. **Clear Code Over Comments:** Prefer self-documenting code. Only comment when logic is non-obvious or explains a workaround/design decision.
+3. **Default Starter Output:** For every newly created project, always add at least one immediate working output (HTML home/screen or JSON health endpoint).
 
-4. **Tailwind-First UI:** Use Tailwind CSS utility classes by default in all frontends. Inline styles only for dynamic/runtime values.
+4. **No Abbreviations:** Reject abbreviated identifiers. Suggest `category`, not `cat`; `style`, not `st`. Exceptions: `env`, `pkg`, `db`, `app` in file paths and established library abbreviations.
 
-5. **Test Behavior, Not Messages:** In Rails/RSpec, assert behavior (`expect(record).not_to be_valid`), not exact error text.
+5. **Clear Code Over Comments:** Prefer self-documenting code. Only comment when logic is non-obvious or explains a workaround/design decision.
 
-6. **Follow Existing Patterns:** Stay consistent with the codebase style in the file/package being edited.
+6. **Tailwind-First UI:** Use Tailwind CSS utility classes by default in all frontends. Inline styles only for dynamic/runtime values.
+
+7. **Test Behavior, Not Messages:** In Rails/RSpec, assert behavior (`expect(record).not_to be_valid`), not exact error text.
+
+8. **Follow Existing Patterns:** Stay consistent with the codebase style in the file/package being edited.
 
 ---
 
@@ -29,7 +33,12 @@ These instructions guide GitHub Copilot (and other AI assistants integrated via 
 
 **Copilot should:**
 - Suggest commands to run on the **host:** `npm start`, `npm run typecheck`, `npm run test`
+- Always leave a default starter screen/page immediately after scaffold (e.g., `app/index.tsx` with a basic "ready" message)
 - Recommend NativeWind + Tailwind utilities in `className`
+- Recommend Expo Router typed routes for safer navigation
+- Recommend TanStack Query for server-state in Expo apps
+- Recommend `expo-secure-store` for auth/session token persistence
+- Do not suggest Redux unless explicitly requested
 - Extract repeated logic to custom hooks
 - Keep components small and single-purpose
 
@@ -37,17 +46,25 @@ These instructions guide GitHub Copilot (and other AI assistants integrated via 
 
 **Copilot should:**
 - Suggest: `docker compose exec nextjs npm run …` for all operations
+- Always create a default output route/page after scaffold (e.g., `app/page.tsx` and/or `app/api/health/route.ts`)
 - Recommend App Router (no Pages Router)
 - Prefer Server Components; Client Components only when needed
 - Use Tailwind utilities in `className`
+- Recommend TanStack Query for client-side server-state
+- Recommend React Hook Form + Zod for forms
+- Do not suggest Redux unless explicitly requested
 - API routes in `app/api/`
 
 ### React 19 SPA — Docker Service
 
 **Copilot should:**
 - Suggest: `docker compose exec react npm run …` for all operations
+- Always leave a basic default screen in `src/App.tsx` and wire an initial backend health fetch when relevant
 - Recommend Vite as bundler
 - Use Tailwind utilities in `className`
+- Recommend TanStack Query for server-state and cache invalidation
+- Recommend React Hook Form + Zod for form validation
+- Do not suggest Redux unless explicitly requested
 - Create reusable components, not duplication
 - Use Vitest for tests (`*.test.ts` / `*.spec.ts`)
 
@@ -55,23 +72,28 @@ These instructions guide GitHub Copilot (and other AI assistants integrated via 
 
 **Copilot should:**
 - Suggest: `docker compose exec nestjs npm run …` for all operations
+- Ensure a basic default JSON response exists immediately after scaffold (e.g., `GET /` returns `{ status: 'ok', service: 'nestjs' }`)
 - Recommend modular architecture: one module per domain
 - Suggest thin controllers (route handlers), thick services (business logic)
 - Use NestJS DI for all dependencies
 - Recommend class-validator + class-transformer for validation
+- Recommend `@nestjs/swagger` for API contracts/docs
 - Suggest Guards/Pipes/Interceptors for auth/logging/error handling
 - Use TypeORM or Prisma for database queries
-- Place tests co-located: `*.spec.ts` next to source
+- Place tests co-located: `*.spec.ts` next to source and add e2e tests for critical endpoints
 
 ### FastAPI Backend — Docker Service
 
 **Copilot should:**
 - Suggest: `docker compose exec api pip install …` and `docker compose exec api python …` / `pytest`
+- Ensure a default JSON health endpoint exists immediately after scaffold (e.g., `GET /health`)
 - Recommend route organization: routers by domain in `app/routers/`
 - Suggest Pydantic models for all validation and OpenAPI docs
+- Recommend `pydantic-settings` for typed environment/config handling
 - Recommend async/await throughout
 - Use FastAPI's Depends() for dependency injection
 - Suggest SQLAlchemy 2.0 with async support
+- Recommend lifespan startup/shutdown hooks for shared resources (DB clients, caches)
 - Recommend Pytest for tests with fixtures
 - Suggest Ruff for linting, MyPy for type checking
 
@@ -79,9 +101,18 @@ These instructions guide GitHub Copilot (and other AI assistants integrated via 
 
 **Copilot should:**
 - Suggest: `docker compose exec fullstack …` for all runtime tasks
+- Ensure a default response exists immediately after scaffold (`root 'home#index'` for HTML-first or `/health` JSON for API-heavy)
 - Recommend Rails conventions: models ↔ DB, controllers ↔ requests, views ↔ HTML
 - Suggest helpers for view-specific logic
+- When creating a new Rails app, suggest `bin/rails new ... --skip-test`
+- After app creation, install/configure `rspec-rails`, `shoulda-matchers`, `simplecov`, and `guard-rspec`
+- Suggest `bin/rails generate rspec:install`, `bundle exec guard init rspec`, and removing `test/` when present
+- Before scaffolding, ask the gem decisions first: auth (`bcrypt`, `devise` only if explicit, or OAuth), authorization (`cancancan`, `pundit`, or none), CSS (`tailwindcss-rails` or `simplecss`), background jobs (`solid_queue` or `sidekiq`), pagination (`pagy` or `kaminari`), and whether the app is HTML-first or API-heavy (`jbuilder` / `blueprinter` only when needed)
+- Ask follow-up gem questions when relevant: search (`ransack` or `pg_search`), uploads (Active Storage / `image_processing` / `shrine`), admin (`activeadmin` / `avo`), auditing (`paper_trail` / `audited`), and multi-tenancy (`acts_as_tenant`)
+- Do not default to `devise` unless explicitly requested
 - **Reject** Minitest; use **RSpec only**
+- Prefer **request specs** over controller specs in Rails
+- Prefer route/path helpers (`root_path`, `user_path(user)`) over hardcoded route strings in specs
 - Recommend asserting behavior: `expect(record).not_to be_valid`; **reject** `expect(record.errors.full_messages).to include("Email…")`
 - Suggest Solid Cache for fragment caching (PostgreSQL-backed)
 - Recommend Sidekiq + Action Cable via Redis
@@ -90,6 +121,7 @@ These instructions guide GitHub Copilot (and other AI assistants integrated via 
 
 **Copilot should:**
 - Suggest: `docker compose exec phoenix …` for all operations
+- Ensure a default JSON health output exists after scaffold (e.g., `GET /health`)
 - Recommend context modules for business logic (similar to Rails services)
 - Suggest LiveView for real-time UI updates
 - Recommend Channels for WebSocket communication

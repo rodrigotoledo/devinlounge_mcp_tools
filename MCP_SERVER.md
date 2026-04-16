@@ -2,7 +2,9 @@
 
 Este repositório funciona como um **MCP Server** (Model Context Protocol). Ele expõe toda a documentação, guias de configuração e padrões deste repo para qualquer editor ou projeto que conectar a ele.
 
-**Resultado prático:** qualquer projeto seu que usar VS Code ou Cursor com este servidor configurado terá acesso a todos os guias, regras e configurações daqui — sem precisar copiar nada.
+**Resultado prático:** qualquer projeto seu que usar VS Code ou Cursor com este servidor configurado terá acesso aos guias, regras e configurações daqui — sem precisar copiar tudo manualmente.
+
+**Importante:** o MCP **não altera automaticamente** o comportamento nativo do `rails new`, `npm create`, ou outros geradores. Ele expõe contexto e regras para o agente consultar. Então, se um projeto Rails foi criado com `rails new` normal, o Rails vai gerar Minitest por padrão. Para evitar isso, o agente precisa criar com `--skip-test` e depois instalar `rspec-rails` + `simplecov`.
 
 ---
 
@@ -12,11 +14,13 @@ Este repositório funciona como um **MCP Server** (Model Context Protocol). Ele 
 - `get_documentation` — guias de setup, padrões Rails/Turbo, Redis, testes, linting
 - `get_configuration` — arquivos de config (ESLint, Prettier, Docker, .env, VS Code)
 - `get_framework_guide` — guia por framework: `rails`, `nestjs`, `fastapi`, `phoenix`, `nextjs`, `react`, `expo`
+- `get_project_bootstrap` — fluxo curto de scaffold por framework (`rails`, `nextjs`, `nestjs`, `fastapi`, `react`, `expo`, `phoenix`) usando os defaults deste template
 - `get_git_flow` — estratégia de branches, commits, PR
 - `search_documentation` — busca livre em toda a documentação
 
 **Resources (contexto que você pode anexar ao chat):**
-- Todos os arquivos `.md` do projeto (CLAUDE.md, GIT_FLOW.md, RAILS_SETUP_GUIDE.md, etc.)
+- Regras centrais (`AGENTS.md`, `CLAUDE.md`, `.copilot/instructions.md`, `.cursor/rules.md`)
+- Guias principais do projeto (RAILS_SETUP_GUIDE.md, GIT_FLOW.md, QUICK_START.md, etc.)
 
 ---
 
@@ -102,7 +106,7 @@ Toda configuração que está neste repositório fica centralizada aqui. Os seus
 - `GIT_FLOW.md`, `RAILS_SETUP_GUIDE.md`, `LINTING_AND_CODE_QUALITY.md`, etc.
 - Qualquer outro arquivo `.md` de documentação deste repo
 
-O AI (Copilot, Cursor, Claude) consulta tudo via MCP automaticamente quando precisar.
+O AI pode consultar isso via MCP quando precisar, mas a qualidade do resultado depende de o cliente/agente realmente chamar os tools/resources corretos durante a tarefa. O caminho mais seguro ao pedir criação de projeto é o agente usar `get_project_bootstrap` com o framework desejado antes de scaffolding.
 
 ---
 

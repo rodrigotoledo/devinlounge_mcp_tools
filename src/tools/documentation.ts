@@ -7,11 +7,16 @@ const docsDir = path.join(__dirname, '../../');
 
 const docCategories = {
   guides: [
+    'AGENTS.md',
+    'CLAUDE.md',
     'RAILS_SETUP_GUIDE.md',
+    'NEXTJS_SETUP_GUIDE.md',
+    'NESTJS_SETUP_GUIDE.md',
     'REACT_NATIVE_SETUP.md',
     'PHOENIX_ELIXIR_SETUP.md',
     'QUICK_START.md',
   ],
+  rules: ['AGENTS.md', 'CLAUDE.md', '.copilot/instructions.md', '.cursor/rules.md'],
   setup: [
     'PROJECT_SETUP_CHECKLIST.md',
     'IMPLEMENTATION_CHECKLIST.md',
@@ -43,7 +48,8 @@ export async function getDocumentation(args: {
 
   try {
     if (fileName) {
-      const filePath = path.join(docsDir, `${fileName}.md`);
+      const normalizedFileName = fileName.endsWith('.md') ? fileName : `${fileName}.md`;
+      const filePath = path.join(docsDir, normalizedFileName);
       const content = await fs.readFile(filePath, 'utf-8');
       return {
         content: [

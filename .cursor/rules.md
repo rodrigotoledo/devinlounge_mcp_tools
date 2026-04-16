@@ -4,9 +4,33 @@ These rules guide Cursor's behavior in this polyglot codebase. They ensure consi
 
 ## 🐳 Foundational Rules
 
-1. **Always use Docker Compose for backend services.** Never run `npm`, `bundle`, `pip`, `mix`, or `poetry` directly on the host. Use `docker compose exec <service> …` for running services or one-shot commands.
+1. **Always use Docker Compose for all non-Expo services.** Never run `npm`, `bundle`, `pip`, `mix`, or `poetry` directly on the host for Next.js, React SPA, NestJS, FastAPI, Rails, or Phoenix. Use `docker compose exec <service> …` for running services or one-shot commands.
 2. **Expo / React Native stays on host.** Use `npm`, `npm run`, `npx expo` directly in `expo-mobile/` directory.
-3. **All migrations, tests, and installs via Docker.** Always.
+3. **All non-Expo migrations, tests, installs, and scripts via Docker.** Always.
+4. **Use bind mounts in development.** Local file edits should be reflected inside running containers automatically.
+5. **Use service-name networking in Docker.** For container-to-container calls, always use Compose service DNS names (`http://api:8000`, `http://nestjs:3001`, `http://fullstack:3000`), never `localhost`.
+6. **Always ship starter output.** Every newly scaffolded project must include at least one immediate working output (HTML home/screen or JSON health endpoint).
+
+## 🛤️ Rails Scaffolding Decisions
+
+Before creating or scaffolding a Rails project, ask the gem-relevant decisions first instead of assuming them:
+
+- authentication: `bcrypt`, `devise` only if explicit, or OAuth
+- authorization: `cancancan`, `pundit`, or none
+- styling: `tailwindcss-rails` or `simplecss`
+- background jobs: `solid_queue` or `sidekiq`
+- pagination: `pagy` or `kaminari`
+- app shape: HTML-first or API-heavy, which affects `jbuilder` / `blueprinter`
+
+Ask these follow-ups when the project needs them:
+
+- search/filtering: `ransack` or `pg_search`
+- uploads: Active Storage, Active Storage + `image_processing`, or `shrine`
+- admin/backoffice: `activeadmin` or `avo`
+- auditing/versioning: `paper_trail` or `audited`
+- multi-tenancy: `acts_as_tenant`
+
+Do not assume `devise`, do not keep Minitest as the active workflow, and keep `rspec-rails` + `simplecov` as the Rails baseline.
 
 ## 📋 Elixir/Phoenix Code Style
 
@@ -132,6 +156,10 @@ end
 **Expo (React Native) — Host Environment**
 - Run on host: `npx expo start`, `npm run typecheck`, `npm run test`
 - Use NativeWind + Tailwind utilities in `className`
+- Use Expo Router typed routes for safer navigation and deep links
+- Use TanStack Query for API server-state in Expo apps
+- Store auth tokens with `expo-secure-store` (avoid plain AsyncStorage for secrets)
+- Do not introduce Redux unless explicitly requested
 - Inline styles only for dynamic/runtime values
 - Extract repeated logic to custom hooks
 - Keep components small and single-purpose
@@ -141,6 +169,9 @@ end
 - Use App Router (Pages Router is deprecated)
 - Prefer Server Components by default; Client Components only when needed
 - Tailwind utilities in `className`
+- Use TanStack Query for client-side server-state
+- Use React Hook Form + Zod for complex forms
+- Do not introduce Redux unless explicitly requested
 - API routes in `app/api/`
 - Environment variables in `web-nextjs/.env.local` and `.env.example`
 
@@ -148,6 +179,9 @@ end
 - Docker command: `docker compose exec react …`
 - Use Vite as bundler
 - Tailwind utilities in `className`
+- Use TanStack Query for server-state (fetch/cache/invalidate)
+- Use React Hook Form + Zod for complex forms
+- Do not introduce Redux unless explicitly requested
 - Component structure: small, reusable units
 - Custom hooks for shared logic
 - Tests with Vitest (`*.test.ts` or `*.spec.ts`)
@@ -166,9 +200,10 @@ end
 - **Module organization:** One module per domain. Controllers are thin (route → service).
 - **Dependency Injection:** Use NestJS DI for everything. No singletons.
 - **Validation:** Class-validator + class-transformer for request DTOs
+- **API contracts:** Enable Swagger (`@nestjs/swagger`) for route/documentation contracts.
 - **Guards/Pipes/Interceptors:** Use for auth, validation, logging, error handling.
 - **Database:** TypeORM (default) or Prisma. Migrations in `src/database/migrations/`.
-- **Tests:** Jest with `--coverage`. Co-locate with source (`*.spec.ts`).
+- **Tests:** Jest with `--coverage`. Co-locate with source (`*.spec.ts`) and keep e2e coverage for critical endpoints.
 - **Linting:** ESLint + Prettier. Run via Docker: `docker compose exec nestjs npm run lint`
 
 ### Backend — FastAPI (Python)
@@ -177,8 +212,10 @@ end
 
 - **Structure:** Routers by domain in `app/routers/`, models in `app/models/`, business logic in `app/services/`.
 - **Validation:** Pydantic v2. Use models for all request/response validation and OpenAPI docs.
+- **Settings:** Use `pydantic-settings` for typed env/config loading.
 - **Async:** Use `async/await` throughout. FastAPI is async by default.
 - **Dependency Injection:** Use FastAPI's Depends() for injecting dependencies.
+- **Lifecycle:** Use lifespan hooks for app startup/shutdown resources.
 - **Database:** SQLAlchemy 2.0 with async support. Alembic for migrations in `app/migrations/`.
 - **Tests:** Pytest with fixtures. Keep tests focused on behavior, not implementation.
 - **Linting:** Ruff (replaces flake8, isort, black). Run via Docker: `docker compose exec api ruff check .`
@@ -190,7 +227,12 @@ end
 
 - **Structure:** Standard Rails conventions. Models for DB logic, controllers for requests, views for presentation.
 - **Helpers:** Use for view-specific logic (labels, CSS classes, display rules). Keep them small.
-- **Testing:** RSpec only. No Minitest. Assert behavior, not exact error messages.
+- **Scaffolding decisions first:** Before generating Rails auth/layout code, ask for auth (`bcrypt`), authorization (`cancancan` or `pundit`), and CSS (`tailwindcss-rails` or `simplecss`).
+- **Auth default:** Do not assume `devise` unless explicitly requested.
+- **Testing stack:** Always install and configure `rspec-rails`, `shoulda-matchers`, and `guard-rspec`. No Minitest.
+- **Spec style:** Prefer request specs over controller specs for Rails endpoint behavior.
+- **Routes in tests:** Use route/path helpers (`root_path`, `user_path(user)`) instead of hardcoded `"/users/1"` strings.
+- **Coverage:** Always install and configure `simplecov` in Rails projects.
   - `expect(record).not_to be_valid` not `expect(record.errors.full_messages).to include("Email...")`
   - Check presence: `expect(record.errors[:email]).to be_present`
   - Use error symbols: `expect(record.errors.details[:email].map { _1[:error] }).to include(:blank)`

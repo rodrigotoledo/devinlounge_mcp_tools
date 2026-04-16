@@ -136,8 +136,8 @@ gem 'sinatra'                # Minimalist web framework
 **Core Testing**
 ```ruby
 gem 'rspec', '~> 3.13'       # Behavior-driven testing
-gem 'rspec-rails'            # Rails integration
-gem 'minitest'               # Rails default (lightweight)
+gem 'rspec-rails'            # Rails integration for Rails projects
+gem 'simplecov'              # Coverage for Rails/Ruby projects
 ```
 
 **Factories & Fixtures**
@@ -644,7 +644,7 @@ bundle audit check
 
 - [ ] Choose web framework (Rails, Sinatra, Hanami)
 - [ ] Select database adapter (pg for PostgreSQL)
-- [ ] Pick testing framework (RSpec or Minitest)
+- [ ] For Rails, install `rspec-rails` and `simplecov`
 - [ ] Choose authentication method (bcrypt, devise, rodauth)
 - [ ] Select authorization library (pundit, cancancan)
 - [ ] Pick serializer (blueprinter, fast_jsonapi)

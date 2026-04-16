@@ -2,9 +2,101 @@
 
 Configuration for Rails 8+ with RSpec, RuboCop, Rufo, SimpleCov, and recommended gems.
 
+**Rails testing baseline:** every Rails project should install and configure `rspec-rails` and `simplecov`, run tests with RSpec, and avoid Minitest as the active project workflow.
+
+**Why Rails still creates Minitest by default:** `rails new` ships with the Rails default test stack unless you explicitly skip it. MCP can guide an AI agent, but it does not change the native behavior of the Rails generator itself.
+
 ---
 
 ## 📦 Essential Gems for Rails
+
+### Mandatory Questions Before Creating Rails Project
+
+Before running `rails new`, always define these decisions:
+
+1. **Authentication approach**
+  - `bcrypt` + custom sessions (default in this template)
+  - `devise` only if explicitly requested
+  - external/OAuth provider
+2. **Authorization library**
+  - `cancancan` (ability-based)
+  - `pundit` (policy-based)
+  - none for very small MVPs
+  - choose **one** by default when authorization is needed
+3. **CSS strategy**
+  - `tailwindcss-rails` (latest, utility-first)
+  - `simplecss` (minimal CSS via layout include)
+4. **Background jobs**
+  - `solid_queue` when keeping jobs DB-backed and simple
+  - `sidekiq` when Redis-backed jobs and mature ecosystem are preferred
+  - none initially
+5. **Pagination**
+  - `pagy` (preferred default)
+  - `kaminari`
+  - none initially
+6. **Search/filtering**
+  - `ransack` for admin-style filtering/forms
+  - `pg_search` for PostgreSQL full-text search
+  - none initially
+7. **File uploads**
+  - Active Storage only
+  - Active Storage + `image_processing`
+  - `shrine` only if the project explicitly needs it
+8. **JSON/API rendering**
+  - HTML-first app, no serializer gem yet
+  - `jbuilder`
+  - `blueprinter`
+9. **Admin/backoffice**
+  - none initially
+  - `activeadmin`
+  - `avo`
+10. **Auditing/versioning**
+  - none initially
+  - `paper_trail`
+  - `audited`
+11. **Multi-tenancy**
+  - none initially
+  - `acts_as_tenant` when tenant scoping is clearly required
+
+If these are not defined, the agent should ask first instead of assuming defaults.
+
+Prefer asking these questions in two passes to avoid overload:
+
+- **Always ask first:** authentication, authorization, styling, background jobs, pagination, and whether the app is HTML-first or API-heavy.
+- **Ask when relevant:** search, uploads, admin/backoffice, auditing, and multi-tenancy.
+
+### Creating a New Rails App Without Minitest
+
+If you want a new Rails app to start with RSpec instead of Minitest, generate it with `--skip-test` and then install the RSpec stack:
+
+```bash
+docker compose exec fullstack bin/rails new my_app --skip-test
+cd my_app
+docker compose exec fullstack bundle add rspec-rails --group "development,test"
+docker compose exec fullstack bundle add shoulda-matchers --group "test"
+docker compose exec fullstack bundle add simplecov --group "test"
+docker compose exec fullstack bundle add guard-rspec --group "development,test"
+docker compose exec fullstack bin/rails generate rspec:install
+docker compose exec fullstack bundle exec guard init rspec
+```
+
+If a project was created without `--skip-test`, Rails will generate `test/` and Minitest files by default. In that case, remove `test/` after installing RSpec.
+
+### Required Testing Workflow
+
+Always bootstrap Rails testing with Docker and keep `rspec-rails` + `simplecov` in the project:
+
+```bash
+docker compose exec fullstack bundle add rspec-rails --group "development,test"
+docker compose exec fullstack bundle add shoulda-matchers --group "test"
+docker compose exec fullstack bundle add simplecov --group "test"
+docker compose exec fullstack bundle add guard-rspec --group "development,test"
+docker compose exec fullstack bin/rails generate rspec:install
+docker compose exec fullstack bundle exec guard init rspec
+docker compose exec fullstack rm -rf test/  # optional cleanup if Minitest files were generated
+```
+
+Use RSpec as the only Rails test workflow and keep `rspec-rails`, `shoulda-matchers`, `simplecov`, and `guard-rspec` installed and configured by default. `guard-rspec` pulls `guard` as dependency; still run `bundle exec guard init rspec` to generate and configure `Guardfile`.
 
 ### Gemfile Template
 
@@ -27,7 +119,9 @@ gem 'trilogy', '~> 2.0'
 gem 'sqlite3', '>= 2.1'
 
 # Styling
-gem 'tailwindcss-rails'
+# Choose one CSS strategy:
+# gem 'tailwindcss-rails'            # Tailwind latest via gem
+# (or) use simplecss via CDN in layout (no gem)
 gem 'rails-i18n', '~> 8.0'
 
 # Caching & Queues
@@ -42,8 +136,9 @@ gem 'rack-cors'
 
 # Authentication & Authorization
 gem 'bcrypt', '~> 3.1.7'
-gem 'pundit', '~> 2.4'
-gem 'rolify', '~> 6.0'
+# Choose one authorization library:
+# gem 'cancancan', '~> 3.6'
+# gem 'pundit', '~> 2.4'
 
 # Multi-tenancy
 gem 'acts_as_tenant', '~> 0.6'
@@ -72,7 +167,7 @@ group :development, :test do
   gem 'prosopite', require: false              # N+1 detection
 
   # Testing
-  gem 'rspec-rails', '~> 7.0'
+  gem 'rspec-rails', '~> 7.0'            # Required Rails test framework
   gem 'rails-controller-testing'
   gem 'factory_bot_rails', '~> 6.4'
   gem 'faker', '~> 3.5'
@@ -95,7 +190,7 @@ end
 
 group :test do
   gem 'shoulda-matchers', '~> 7.0'   # One-liner tests
-  gem 'simplecov', '~> 0.22', require: false  # Coverage
+  gem 'simplecov', '~> 0.22', require: false  # Required coverage tool
   gem 'database_cleaner-active_record', '~> 2.2'
   gem 'webmock', '~> 3.24'           # HTTP stubbing
   gem 'vcr', '~> 6.3'                # Record HTTP interactions
@@ -387,7 +482,7 @@ All via Docker Compose from repo root:
 ```bash
 # Dependencies
 docker compose exec fullstack bundle install
-docker compose exec fullstack bundle add devise
+docker compose exec fullstack bundle add bcrypt
 
 # Database
 docker compose exec fullstack bin/rails db:create
@@ -408,6 +503,7 @@ docker compose exec fullstack bin/rspec                      # All tests
 docker compose exec fullstack bin/rspec spec/models          # Models only
 docker compose exec fullstack bin/rspec --format progress    # Progress format
 docker compose exec fullstack bin/rspec --coverage           # With SimpleCov
+docker compose exec fullstack bin/rspec spec/requests        # Requests only
 
 # Console & debugging
 docker compose exec fullstack bin/rails console
@@ -418,6 +514,11 @@ docker compose exec fullstack bin/rails assets:precompile    # Compile assets
 docker compose exec fullstack bin/rails generate model User email:string
 docker compose exec fullstack bin/rails generate controller Users index show
 docker compose exec fullstack bin/rails generate migration CreateUsers
+
+# Optional authorization setup (choose one)
+docker compose exec fullstack bundle add cancancan
+# or
+docker compose exec fullstack bundle add pundit
 ```
 
 ---
@@ -457,12 +558,12 @@ end
 require 'rails_helper'
 
 describe 'Users API' do
-  describe 'GET /users/:id' do
+  describe 'GET user_path' do
     context 'when user exists' do
       let(:user) { create(:user) }
 
       it 'returns the user' do
-        get "/users/#{user.id}"
+        get user_path(user)
         expect(response).to have_http_status(:ok)
         expect(response.parsed_body).to include('email' => user.email)
       end
@@ -470,7 +571,7 @@ describe 'Users API' do
 
     context 'when user does not exist' do
       it 'returns not found' do
-        get '/users/999'
+        get user_path(999)
         expect(response).to have_http_status(:not_found)
       end
     end
@@ -563,11 +664,16 @@ end
 3. **Faker:** Generate realistic test data
 4. **WebMock/VCR:** Stub external API calls
 5. **Database Cleaner:** Isolate tests with transaction rollback
-6. **SimpleCov:** Aim for >80% code coverage
+6. **SimpleCov:** Always install it and aim for >80% code coverage
 7. **Rubocop:** Fix style issues before committing
 8. **Brakeman:** Run before each release
 9. **Keep tests focused:** One behavior per test (GIVEN/WHEN/THEN pattern)
 10. **Don't assert error messages:** Assert presence of error, not exact text
+11. **Do not keep Minitest active:** Standardize on `rspec-rails` + `simplecov` for every Rails app
+12. **Define auth/authorization first:** Decide `bcrypt` and `cancancan`/`pundit` before scaffolding user flow
+13. **Define CSS first:** Decide `tailwindcss-rails` or `simplecss` before generating layout/components
+14. **Prefer request specs:** Avoid controller specs for endpoint behavior unless there is a specific reason
+15. **Use path helpers in specs:** Prefer `root_path`/`user_path(user)` over hardcoded route strings
 
 ---
 
