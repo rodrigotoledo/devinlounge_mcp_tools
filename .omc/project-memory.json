@@ -1,22 +1,57 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1775516309035,
-  "projectRoot": "/home/rtoledo/www/hardhat",
+  "lastScanned": 1776367728049,
+  "projectRoot": "/home/rtoledo/www/devinlounge_mcp_tools",
   "techStack": {
-    "languages": [],
-    "frameworks": [],
-    "packageManager": null,
-    "runtime": null
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": ">=18",
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "express",
+        "version": "5.2.1",
+        "category": "backend"
+      }
+    ],
+    "packageManager": "npm",
+    "runtime": "Node.js 18"
   },
   "build": {
-    "buildCommand": null,
+    "buildCommand": "npm run build",
     "testCommand": null,
     "lintCommand": null,
-    "devCommand": null,
-    "scripts": {}
+    "devCommand": "npm run start",
+    "scripts": {
+      "build": "tsc -p tsconfig.json",
+      "start": "node dist/index.js",
+      "start:http": "MCP_MODE=http npm start",
+      "start:stdio": "MCP_MODE=stdio npm start",
+      "dev:http": "tsx watch src/index.http.ts",
+      "watch": "tsc -p tsconfig.json --watch",
+      "stop": "pkill -f 'node dist/index.js' || true",
+      "stop:stdio": "pkill -f 'MCP_MODE=stdio' || true",
+      "stop:http": "pkill -f 'MCP_MODE=http' || true",
+      "stop:dev": "pkill -f 'tsx watch' || true",
+      "stop:all": "npm run stop && npm run stop:dev"
+    }
   },
   "conventions": {
-    "namingStyle": null,
+    "namingStyle": "camelCase",
     "importStyle": null,
     "testPattern": null,
     "fileOrganization": null
@@ -25,8 +60,8 @@
     "isMonorepo": false,
     "workspaces": [],
     "mainDirectories": [
-      "docs",
-      "scripts"
+      "scripts",
+      "src"
     ],
     "gitBranches": {
       "defaultBranch": "main",
@@ -35,113 +70,45 @@
   },
   "customNotes": [],
   "directoryMap": {
-    "docs": {
-      "path": "docs",
-      "purpose": "Documentation",
-      "fileCount": 7,
-      "lastAccessed": 1775516309013,
+    "dist": {
+      "path": "dist",
+      "purpose": "Distribution/build output",
+      "fileCount": 12,
+      "lastAccessed": 1776367728046,
       "keyFiles": [
-        "AGENTS.md",
-        "GAPS-PLANO-ACAO.md",
-        "OAUTH_IMPLEMENTACAO.md",
-        "PLANO-ACAO-PRODUTO.md",
-        "PLANO_FECHAR_BRECHAS.md"
-      ]
-    },
-    "hardhat-backend": {
-      "path": "hardhat-backend",
-      "purpose": null,
-      "fileCount": 8,
-      "lastAccessed": 1775516309020,
-      "keyFiles": [
-        "Dockerfile",
-        "README.md",
-        "requirements.txt"
-      ]
-    },
-    "hardhat-expo": {
-      "path": "hardhat-expo",
-      "purpose": null,
-      "fileCount": 16,
-      "lastAccessed": 1775516309022,
-      "keyFiles": [
-        "App.tsx",
-        "README.md",
-        "app.json",
-        "babel.config.js",
-        "global.css"
-      ]
-    },
-    "hardhat-fullstack": {
-      "path": "hardhat-fullstack",
-      "purpose": null,
-      "fileCount": 15,
-      "lastAccessed": 1775516309026,
-      "keyFiles": [
-        "Dockerfile",
-        "Gemfile",
-        "Gemfile.lock",
-        "Procfile.dev",
-        "README.md"
+        "index.d.ts",
+        "index.d.ts.map",
+        "index.http.d.ts",
+        "index.http.d.ts.map",
+        "index.http.js"
       ]
     },
     "scripts": {
       "path": "scripts",
       "purpose": "Build/utility scripts",
       "fileCount": 1,
-      "lastAccessed": 1775516309027,
+      "lastAccessed": 1776367728047,
       "keyFiles": [
         "sync-env-from-example.sh"
       ]
     },
-    "hardhat-backend/app": {
-      "path": "hardhat-backend/app",
-      "purpose": "Application code",
-      "fileCount": 11,
-      "lastAccessed": 1775516309032,
-      "keyFiles": [
-        "__init__.py",
-        "address_utils.py",
-        "auth.py"
-      ]
-    },
-    "hardhat-backend/scripts": {
-      "path": "hardhat-backend/scripts",
-      "purpose": "Build/utility scripts",
-      "fileCount": 1,
-      "lastAccessed": 1775516309033,
-      "keyFiles": [
-        "run_with_ngrok.py"
-      ]
-    },
-    "hardhat-expo/app": {
-      "path": "hardhat-expo/app",
-      "purpose": "Application code",
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
       "fileCount": 3,
-      "lastAccessed": 1775516309034,
+      "lastAccessed": 1776367728047,
       "keyFiles": [
-        "_layout.tsx",
-        "index.tsx",
-        "onboarding.tsx"
-      ]
-    },
-    "hardhat-expo/assets": {
-      "path": "hardhat-expo/assets",
-      "purpose": "Static assets",
-      "fileCount": 13,
-      "lastAccessed": 1775516309034,
-      "keyFiles": [
-        "android-icon-background.png",
-        "android-icon-foreground.png",
-        "android-icon-monochrome.png"
+        "index.http.ts",
+        "index.stdio.ts",
+        "index.ts"
       ]
     }
   },
   "hotPaths": [
     {
       "path": "",
-      "accessCount": 18,
-      "lastAccessed": 1775517240001,
+      "accessCount": 21,
+      "lastAccessed": 1776367762983,
       "type": "directory"
     },
     {
