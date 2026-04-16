@@ -1,122 +1,83 @@
-# ============================================================
-# ROOT — monorepo with hardhat-expo (Expo/RN) + hardhat-backend (FastAPI)
-# ============================================================
-
-# ─── Secrets & local env ────────────────────────────────────
+# Environment variables
 .env
 .env.local
 .env.*.local
-.envrc
 
-# ─── macOS ──────────────────────────────────────────────────
-.DS_Store
-*.pem
+# Dependencies
+node_modules/
+.venv/
+__pycache__/
+*.egg-info/
+dist/
+build/
+.bundle/
 
-# ─── Editor / IDE ───────────────────────────────────────────
+# Build & dist
+dist/
+build/
+.next/
+out/
+coverage/
+.turbo/
+
+# Caches
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.eslintcache/
+.sass-cache/
+.expo/
+
+# IDE
+.vscode/settings.local.json
 .idea/
 *.swp
 *.swo
+*~
+.DS_Store
 
-# ─── Logs ───────────────────────────────────────────────────
+# OS
+.DS_Store
+Thumbs.db
+
+# Test coverage
+coverage/
+*.lcov
+
+# Logs
+logs/
 *.log
-npm-debug.*
-yarn-debug.*
-yarn-error.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pids/
+*.pid
+*.seed
 
-# ─── Temp ───────────────────────────────────────────────────
+# Runtime
 tmp/
-.cache
+temp/
 
-# ============================================================
-# EXPO / React Native (hardhat-expo/)
-# ============================================================
-
-# Expo build artifacts
-hardhat-expo/.expo/
-hardhat-expo/dist/
-hardhat-expo/web-build/
-hardhat-expo/expo-env.d.ts
-
-# Generated native folders (after prebuild)
-hardhat-expo/ios/
-hardhat-expo/android/
-
-# Metro bundler
-.metro-health-check*
-
-# Node
-node_modules/
-*.tsbuildinfo
-
-# Native signing / certificates
-*.orig.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-
-# ============================================================
-# FASTAPI / Python (hardhat-backend/)
-# ============================================================
-
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
-
-# Cython debug symbols
-cython_debug/
-
-# Virtual environments (should not exist; use Docker)
-venv/
-env/
-ENV/
-.venv/
-.python-version
-
-# Package managers
-Pipfile.lock
-poetry.lock
-
-# PyInstaller
-*.spec
-
-# Jupyter
-.ipynb_checkpoints
-
-# Test / coverage
-.pytest_cache/
-.mypy_cache/
-htmlcov/
-.coverage
-.coverage.*
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-
-# FastAPI runtime uploads / generated static
-hardhat-backend/static/
-hardhat-backend/media/
-hardhat-backend/uploads/
-
-# SQLite databases
+# Database
+*.sqlite
 *.sqlite3
 *.db
 
-# Alembic — keep migrations, ignore only runtime artifacts
-# (backend schema migrations live in hardhat-fullstack/db/migrate/)
+# Platform-specific
+.claude/settings.local.json
+.claude/worktrees/
 
-# Build / packaging
-build/
-dist/
-*.egg-info/
+# Docker-compose local overrides (if using docker-compose.override.yml)
+docker-compose.override.yml
 
-# ============================================================
-# TOOLING (local, not committed)
-# ============================================================
+# Git
+.git/
 
-# Ruby (optional tooling at root)
-.bundle/
-vendor/bundle/
+# Do NOT ignore
+# .env.example (keep in repo)
+# .cursor/rules.md (keep in repo)
+# CLAUDE.md (keep in repo)
+# GIT_FLOW.md (keep in repo)
+# .vscode/settings.json (keep in repo)
+# .vscode/extensions.json (keep in repo)

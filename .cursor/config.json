@@ -1,0 +1,233 @@
+{
+  "schema": "1.0",
+  "name": "Multi-Framework Polyglot Codebase",
+  "description": "Cursor configuration for a multi-service Docker-based project with Next.js, React, NestJS, FastAPI, Rails, Phoenix, and Expo.",
+
+  "rules": {
+    "docker_mandatory": {
+      "enabled": true,
+      "description": "Always use Docker Compose for backend services (except Expo on host)",
+      "applies_to": ["backend", "services"],
+      "exceptions": ["expo-mobile"]
+    },
+    "no_abbreviations": {
+      "enabled": true,
+      "description": "Avoid abbreviations in code identifiers; use full names",
+      "exceptions": ["env", "pkg", "db", "app", "src", "test"]
+    },
+    "comments_minimal": {
+      "enabled": true,
+      "description": "Comment only when logic is non-obvious; prefer clear naming"
+    },
+    "tailwind_first": {
+      "enabled": true,
+      "description": "Use Tailwind CSS utilities by default in all frontends",
+      "applies_to": ["frontend", "views"]
+    },
+    "git_flow": {
+      "enabled": true,
+      "description": "Use Git Flow branching: develop for features, main for production"
+    }
+  },
+
+  "services": {
+    "expo_mobile": {
+      "name": "Expo / React Native",
+      "path": "expo-mobile",
+      "runtime": "node",
+      "host_based": true,
+      "docker_exemption": true,
+      "commands": {
+        "dev": "npm start",
+        "typecheck": "npm run typecheck",
+        "test": "npm run test",
+        "build": "npm run build"
+      }
+    },
+    "nextjs": {
+      "name": "Next.js 15",
+      "path": "web-nextjs",
+      "runtime": "node",
+      "docker": "docker compose exec nextjs",
+      "primary_commands": {
+        "dev": "npm run dev",
+        "build": "npm run build",
+        "test": "npm run test",
+        "lint": "npm run lint"
+      }
+    },
+    "react": {
+      "name": "React 19 SPA",
+      "path": "web-react",
+      "runtime": "node",
+      "bundler": "vite",
+      "docker": "docker compose exec react",
+      "primary_commands": {
+        "dev": "npm run dev",
+        "build": "npm run build",
+        "test": "npm run test",
+        "lint": "npm run lint"
+      }
+    },
+    "nestjs": {
+      "name": "NestJS Backend",
+      "path": "backend-nestjs",
+      "runtime": "node",
+      "framework": "nestjs",
+      "docker": "docker compose exec nestjs",
+      "database": "postgresql",
+      "primary_commands": {
+        "dev": "npm run start:dev",
+        "build": "npm run build",
+        "test": "npm run test",
+        "lint": "npm run lint",
+        "migration_create": "npm run migration:create",
+        "migration_run": "npm run migration:run"
+      }
+    },
+    "fastapi": {
+      "name": "FastAPI Backend",
+      "path": "backend-fastapi",
+      "runtime": "python",
+      "framework": "fastapi",
+      "docker": "docker compose exec api",
+      "database": "postgresql",
+      "package_manager": "pip",
+      "primary_commands": {
+        "install": "pip install -r requirements.txt",
+        "dev": "uvicorn app.main:app --reload",
+        "test": "pytest",
+        "lint": "ruff check .",
+        "type_check": "mypy app/",
+        "migration_create": "alembic revision --autogenerate -m",
+        "migration_run": "alembic upgrade head"
+      }
+    },
+    "rails": {
+      "name": "Rails 8 Fullstack",
+      "path": "backend-rails",
+      "runtime": "ruby",
+      "framework": "rails",
+      "docker": "docker compose exec fullstack",
+      "database": "postgresql",
+      "cache": "solid_cache",
+      "queue": "sidekiq",
+      "primary_commands": {
+        "install": "bundle install",
+        "db_migrate": "bin/rails db:migrate",
+        "db_seed": "bin/rails db:seed",
+        "console": "bin/rails console",
+        "test": "bin/rspec",
+        "lint": "bin/rubocop",
+        "erb_lint": "bin/erb-lint"
+      }
+    },
+    "phoenix": {
+      "name": "Phoenix / Elixir Backend",
+      "path": "backend-phoenix",
+      "runtime": "elixir",
+      "framework": "phoenix",
+      "docker": "docker compose exec phoenix",
+      "database": "postgresql",
+      "primary_commands": {
+        "install": "mix deps.get",
+        "server": "iex -S mix phx.server",
+        "test": "mix test",
+        "lint": "mix credo",
+        "format": "mix format",
+        "migration_create": "mix ecto.gen.migration",
+        "migration_run": "mix ecto.migrate"
+      }
+    }
+  },
+
+  "linters": {
+    "typescript": {
+      "tool": "eslint",
+      "enabled": true,
+      "run_via_docker": true
+    },
+    "python": {
+      "tool": "ruff",
+      "enabled": true,
+      "run_via_docker": true,
+      "additional": ["mypy"]
+    },
+    "ruby": {
+      "tool": "rubocop",
+      "enabled": false,
+      "run_via_docker": true,
+      "note": "Run only via Docker; disabled in-editor to avoid bundler issues"
+    },
+    "elixir": {
+      "tool": "credo",
+      "enabled": true,
+      "run_via_docker": true
+    }
+  },
+
+  "formatters": {
+    "typescript": "prettier",
+    "python": "ruff",
+    "ruby": "ruby-lsp",
+    "elixir": "mix format"
+  },
+
+  "testing": {
+    "typescript": {
+      "frameworks": ["vitest", "jest"],
+      "run_via_docker": true
+    },
+    "python": {
+      "frameworks": ["pytest"],
+      "run_via_docker": true
+    },
+    "ruby": {
+      "frameworks": ["rspec"],
+      "run_via_docker": true,
+      "note": "RSpec only; no Minitest"
+    },
+    "elixir": {
+      "frameworks": ["exunit"],
+      "run_via_docker": true
+    }
+  },
+
+  "environment_variables": {
+    "root_env_file": ".env.example",
+    "per_service_env": true,
+    "sync_script": "./scripts/sync-env-from-example.sh",
+    "never_commit": [".env", "*.local", ".env.local", ".env.*.local"]
+  },
+
+  "git": {
+    "workflow": "git-flow",
+    "main_branch": "main",
+    "develop_branch": "develop",
+    "feature_prefix": "feature/",
+    "hotfix_prefix": "hotfix/",
+    "release_prefix": "release/"
+  },
+
+  "editor_integrations": {
+    "vscode_settings": ".vscode/settings.json",
+    "vscode_extensions": ".vscode/extensions.json",
+    "cursor_rules": ".cursor/rules.md"
+  },
+
+  "frontend_styling": {
+    "framework": "tailwind",
+    "version": "v4",
+    "applies_to": ["expo_mobile", "nextjs", "react", "rails_views", "phoenix_views"],
+    "default_approach": "utility_classes",
+    "config_file": "tailwind.config.js"
+  },
+
+  "optimization": {
+    "reduce_token_waste": true,
+    "prefer_diffs": true,
+    "avoid_full_file_rewrites": true,
+    "be_specific_file_paths": true,
+    "ask_before_large_changes": true
+  }
+}

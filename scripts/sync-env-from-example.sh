@@ -1,43 +1,55 @@
-#!/usr/bin/env bash
-# Mescla chaves de cada *.env.example no *.env correspondente (só acrescenta chaves que faltam).
-# Uso (na raiz do repo):
-#   ./scripts/sync-env-from-example.sh
-set -euo pipefail
+#!/bin/bash
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# sync-env-from-example.sh
+# Creates/updates .env files in each service directory based on .env.example files
+# Usage: ./scripts/sync-env-from-example.sh
 
-merge_missing() {
-  local target="$1"
-  local example="$2"
-  if [[ ! -f "$example" ]]; then
-    echo "skip (no example): $example"
-    return 0
-  fi
-  if [[ ! -f "$target" ]]; then
-    cp "$example" "$target"
-    echo "created $target from $(basename "$example")"
-    return 0
-  fi
-  local key line
-  while IFS= read -r line || [[ -n "$line" ]]; do
-    [[ -z "${line// }" ]] && continue
-    [[ "$line" =~ ^[[:space:]]*# ]] && continue
-    [[ "$line" =~ ^[A-Za-z_][A-Za-z0-9_]*= ]] || continue
-    key="${line%%=*}"
-    if ! grep -q "^${key}=" "$target"; then
-      printf '\n%s\n' "$line" >> "$target"
-      echo "  + $key → $target"
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(dirname "$SCRIPT_DIR")"
+
+echo "🔧 Syncing .env files from .env.example templates..."
+
+# Function to sync env file
+sync_env() {
+    local source_file="$1"
+    local target_file="$2"
+    local service_name="$3"
+
+    if [ ! -f "$source_file" ]; then
+        echo "⚠️  $service_name: .env.example not found at $source_file (skipping)"
+        return
     fi
-  done < "$example"
+
+    if [ -f "$target_file" ]; then
+        echo "✓ $service_name: .env already exists (no changes)"
+    else
+        cp "$source_file" "$target_file"
+        echo "✓ $service_name: .env created from .env.example"
+    fi
 }
 
-echo "Root compose .env"
-merge_missing "$ROOT/.env" "$ROOT/.env.example"
+# Root .env
+sync_env "$REPO_ROOT/.env.example" "$REPO_ROOT/.env" "Root"
 
-echo "hardhat-backend/.env"
-merge_missing "$ROOT/hardhat-backend/.env" "$ROOT/hardhat-backend/.env.example"
+# Frontend services
+sync_env "$REPO_ROOT/expo-mobile/.env.example" "$REPO_ROOT/expo-mobile/.env" "Expo Mobile"
+sync_env "$REPO_ROOT/web-nextjs/.env.example" "$REPO_ROOT/web-nextjs/.env.local" "Next.js"
+sync_env "$REPO_ROOT/web-react/.env.example" "$REPO_ROOT/web-react/.env" "React SPA"
 
-echo "hardhat-fullstack/.env"
-merge_missing "$ROOT/hardhat-fullstack/.env" "$ROOT/hardhat-fullstack/.env.example"
+# Backend services
+sync_env "$REPO_ROOT/backend-nestjs/.env.example" "$REPO_ROOT/backend-nestjs/.env" "NestJS"
+sync_env "$REPO_ROOT/backend-fastapi/.env.example" "$REPO_ROOT/backend-fastapi/.env" "FastAPI"
+sync_env "$REPO_ROOT/backend-rails/.env.example" "$REPO_ROOT/backend-rails/.env" "Rails"
+sync_env "$REPO_ROOT/backend-phoenix/.env.example" "$REPO_ROOT/backend-phoenix/.env" "Phoenix"
 
-echo "Done."
+echo ""
+echo "✅ Environment variable setup complete!"
+echo ""
+echo "📝 Next steps:"
+echo "   1. Review and update .env files with your local configuration"
+echo "   2. For secrets: use strong, random values (never commit these)"
+echo "   3. Run: docker compose up --build"
+echo ""
+echo "💡 Tip: Keep .env.example committed with defaults only; never add real secrets to .env.example"

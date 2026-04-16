@@ -1,20 +1,42 @@
 {
   "recommendations": [
     "editorconfig.editorconfig",
-    "dbaeumer.vscode-eslint",
-    "expo.vscode-expo-tools",
     "bradlc.vscode-tailwindcss",
+    "dbaeumer.vscode-eslint",
     "ms-python.python",
     "ms-python.pylance",
-    "ms-python.debugpy",
     "charliermarsh.ruff",
     "ms-azuretools.vscode-docker",
-    "shopify.ruby-lsp"
+    "shopify.ruby-lsp",
+    "expo.vscode-expo-tools",
+    "github.copilot",
+    "github.copilot-chat",
+    "github.vscode-github-actions",
+    "GitLab.gitlab-workflow",
+    "eamodio.gitlens",
+    "ms-vscode.remote-containers",
+    "ms-vscode-remote.remote-wsl",
+    "ms-vscode-remote.remote-ssh",
+    "orta.vscode-jest",
+    "vitest.explorer",
+    "ms-python.vscode-pylance",
+    "jacobdotcosta.bst",
+    "bysworks.vscode-elixir",
+    "drawethree.elixir-test",
+    "prismaorm.prisma",
+    "mquandalle.graphql",
+    "redhat.vscode-yaml",
+    "gitleaks.gitleaks",
+    "trunk.io",
+    "sonarsource.sonarlint-vscode"
   ],
   "unwantedRecommendations": [
     "misogi.ruby-rubocop",
     "wingrunr21.vscode-ruby",
     "rebornix.ruby",
-    "rebornix.Ruby"
+    "rebornix.Ruby",
+    "vscode-icons-team.vscode-icons",
+    "ms-python.venv",
+    "ms-python.pip-packages-viewer"
   ]
 }

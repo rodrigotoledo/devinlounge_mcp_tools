@@ -1,16 +1,119 @@
-# https://editorconfig.org — VS Code, Cursor, JetBrains, etc.
+# EditorConfig is awesome: https://EditorConfig.org
+
+# Top-most EditorConfig file
 root = true
 
+# All files
 [*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Text files
+[*.{txt,md,markdown}]
+trim_trailing_whitespace = false
+
+# JSON
+[*.{json,jsonc}]
 indent_style = space
 indent_size = 2
-end_of_line = lf
-charset = utf-8
-trim_trailing_whitespace = true
-insert_final_newline = true
 
+# YAML
+[*.{yaml,yml}]
+indent_style = space
+indent_size = 2
+
+# TypeScript / JavaScript
+[*.{ts,tsx,js,jsx,mjs,cjs}]
+indent_style = space
+indent_size = 2
+
+# Python
+[*.py]
+indent_style = space
+indent_size = 4
+max_line_length = 100
+
+# Ruby
+[*.{rb,erb}]
+indent_style = space
+indent_size = 2
+max_line_length = 100
+
+# Rails migrations
+[db/migrate/*.rb]
+indent_style = space
+indent_size = 2
+
+# Elixir
+[*.{ex,exs}]
+indent_style = space
+indent_size = 2
+
+# EEx (Elixir templates)
+[*.eex]
+indent_style = space
+indent_size = 2
+
+# HTML / Templates
+[*.{html,erb,eex,heex,jsx,tsx}]
+indent_style = space
+indent_size = 2
+
+# CSS / Tailwind
+[*.{css,scss,sass}]
+indent_style = space
+indent_size = 2
+
+# Config files
+[.editorconfig]
+indent_style = space
+indent_size = 2
+
+[{docker-compose.yml,docker-compose.yaml,.dockerignore,Dockerfile}]
+indent_style = space
+indent_size = 2
+
+[{.env,.env.example,.env.local}]
+indent_style = space
+indent_size = 0
+
+# Gemfile / Bundler
+[Gemfile*]
+indent_style = space
+indent_size = 2
+
+# Composer / PHP
+[{composer.json,composer.lock}]
+indent_style = space
+indent_size = 2
+
+# npm / yarn
+[{package.json,package-lock.json,.npmrc,.yarnrc}]
+indent_style = space
+indent_size = 2
+
+# Mix / Elixir
+[{mix.exs,mix.lock}]
+indent_style = space
+indent_size = 2
+
+# Markdown (keep trailing spaces for line breaks)
 [*.md]
 trim_trailing_whitespace = false
 
-[*.{py,pyi}]
-indent_size = 4
+# Makefile (MUST use tabs)
+[Makefile]
+indent_style = tab
+
+# Shell scripts
+[*.{sh,bash}]
+indent_style = space
+indent_size = 2
+
+# ignore
+[.gitignore]
+indent_style = space
+indent_size = 0
+

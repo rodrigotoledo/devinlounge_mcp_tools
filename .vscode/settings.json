@@ -3,13 +3,18 @@
   "editor.insertSpaces": true,
   "editor.detectIndentation": false,
   "editor.formatOnSave": true,
-  "editor.rulers": [
-    100
-  ],
+  "editor.rulers": [100],
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
   "editor.stickyScroll.enabled": true,
   "editor.linkedEditing": true,
+  "editor.wordWrap": "on",
+  "editor.minimap.enabled": true,
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": false
+  },
   "files.eol": "\n",
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
@@ -20,33 +25,38 @@
     "**/__pycache__": true,
     "**/.pytest_cache": true,
     "**/.mypy_cache": true,
+    "**/.ruff_cache": true,
     "**/.venv": true,
     "**/dist": true,
-    "**/.expo": true
+    "**/build": true,
+    "**/.expo": true,
+    "**/.next": true,
+    "**/.turbo": true,
+    "**/coverage": true,
+    "**/tmp": true
   },
   "search.exclude": {
     "**/node_modules": true,
     "**/package-lock.json": true,
     "**/.venv": true,
-    "**/__pycache__": true
+    "**/__pycache__": true,
+    "**/.ruff_cache": true,
+    "**/.pytest_cache": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.next": true
   },
   "files.watcherExclude": {
     "**/node_modules/**": true,
     "**/.git/objects/**": true,
     "**/.venv/**": true,
-    "**/.expo/**": true
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
-  "[javascriptreact]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
+    "**/.expo/**": true,
+    "**/.next/**": true,
+    "**/dist/**": true,
+    "**/build/**": true,
+    "**/.turbo/**": true,
+    "**/.ruff_cache/**": true,
+    "**/.pytest_cache/**": true
   },
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
@@ -55,83 +65,194 @@
     "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[python]": {
-    "editor.defaultFormatter": "ms-python.python",
-    "editor.formatOnSave": true
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports.ruff": "explicit",
+      "source.fixAll.ruff": "explicit"
+    },
+    "editor.defaultFoldingRangeProvider": "ms-python.pylance",
+    "editor.formatOnSaveMode": "file"
   },
-  "[ruby]": {
-    "editor.defaultFormatter": "Shopify.ruby-lsp",
-    "editor.formatOnSave": true
+  "_comment_eslint": "ESLint runs via npm from Docker for Node services (docker compose exec <service> npm run lint). In-editor ESLint shows real-time errors. Configure per project via .eslintrc.json",
+  "eslint.enable": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.format.enable": false,
+  "eslint.run": "onType",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
   },
   "[markdown]": {
     "editor.wordWrap": "on",
     "files.trimTrailingWhitespace": false
   },
-  "typescript.tsdk": "hardhat-expo/node_modules/typescript/lib",
+  "[elixir]": {
+    "editor.formatOnSave": false
+  },
+  "[eex]": {
+    "editor.formatOnSave": false
+  },
+  "typescript.tsdk": "expo-mobile/node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.preferences.importModuleSpecifierEnding": "minimal",
   "javascript.preferences.importModuleSpecifierEnding": "minimal",
-  "tailwindCSS.experimental.configFile": "${workspaceFolder}/hardhat-expo/tailwind.config.js",
-  "tailwindCSS.classAttributes": [
-    "class",
-    "className"
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+    ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+    ["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+    ["className=[{\"'`]([^\"'`}]*)[\"'`}]"],
+    ["classNamePattern='([^']*)'"],
+    ["className={'([^'}]*)'}"],
+    ["styleName=[{\"'`]([^\"'`}]*)[\"'`}]"],
+    ["nativewind\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
   "tailwindCSS.includeLanguages": {
     "typescript": "javascript",
-    "typescriptreact": "javascript"
+    "typescriptreact": "javascript",
+    "javascript": "javascript",
+    "javascriptreact": "javascript",
+    "erb": "html",
+    "eex": "html",
+    "elixir": "html",
+    "html": "html",
+    "css": "css",
+    "postcss": "css",
+    "scss": "scss",
+    "tailwindcss": "css"
   },
-  "tailwindCSS.experimental.classRegex": [
-    "className\\s*=\\s*[\"'`]([^\"'`]*)[\"'`]",
-    "className\\s*=\\s*\\{[\"'`]([^\"'`]*)[\"'`]\\}"
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.lint.cssConflict": "warning",
+  "tailwindCSS.lint.invalidApply": "warning",
+  "tailwindCSS.lint.invalidScreen": "warning",
+  "tailwindCSS.lint.invalidConfigPath": "warning",
+  "tailwindCSS.lint.invalidTailwindDirective": "warning",
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    "styleClass",
+    "styleName"
   ],
-  "expo.appManifest": "${workspaceFolder}/hardhat-expo/app.json",
-  "expo.tsconfig": "${workspaceFolder}/hardhat-expo/tsconfig.json",
   "python.analysis.extraPaths": [
-    "${workspaceFolder}/hardhat-backend"
+    "${workspaceFolder}/backend-fastapi"
   ],
-  "_comment_backend_docker_only": "Backend runtime/migrations/install MUST use Docker Compose from repo root (docker compose exec api …). The interpreter below is only for editor analysis.",
-  "python.defaultInterpreterPath": "python",
+  "_comment_backend_docker": "Backend runtime/installs MUST use Docker Compose from repo root (docker compose exec <service> …). Editor analyzers below are for IDE hints only.",
+  "python.defaultInterpreterPath": "python3",
   "python.terminal.activateEnvironment": false,
   "python.languageServer": "Pylance",
   "python.analysis.typeCheckingMode": "basic",
-  "_comment_ruby_docker": "RuboCop execution should be run via Docker (docker compose exec fullstack bin/rubocop). In-editor Ruby LSP can be used for navigation; avoid RuboCop Language Server on host to prevent bundler issues.",
+  "python.linting.enabled": false,
+  "python.linting.ruffEnabled": false,
+  "python.formatting.provider": "none",
+  "pylance.analysis.typeCheckingMode": "basic",
+  "_comment_ruby_docker": "RuboCop & Rufo MUST run via Docker Compose from repo root: docker compose exec fullstack bin/rubocop. Ruby LSP provides in-editor hints only (navigation, definition lookup). Linting disabled in-editor to prevent bundler conflicts with Docker approach.",
+  "ruby.enable": true,
   "ruby.rubocop.enable": false,
   "ruby.rubocop.useBundler": false,
-  "rubyLsp.bundleGemfile": "${workspaceFolder}/hardhat-fullstack/Gemfile",
+  "ruby.rufo.enable": false,
+  "rubyLsp.bundleGemfile": "${workspaceFolder}/backend-rails/Gemfile",
   "rubyLsp.useBundlerGemfile": true,
   "rubyLsp.linters": [],
-  "rubyLsp.logLevel": "error",
   "rubyLsp.formatter": "none",
+  "rubyLsp.logLevel": "error",
   "[ruby]": {
     "editor.defaultFormatter": "Shopify.ruby-lsp",
-    "editor.formatOnSave": true,
-    "editor.tabSize": 2
+    "editor.formatOnSave": false,
+    "editor.tabSize": 2,
+    "editor.codeActionsOnSave": {}
   },
   "[erb]": {
     "editor.defaultFormatter": "Shopify.ruby-lsp",
-    "editor.formatOnSave": true
+    "editor.formatOnSave": false
   },
+  "erb.erb-lint.enable": false,
   "erb.erb-lint.enabled": false,
-  "chat.tools.terminal.autoApprove": {
-    "npx expo": true,
-    "docker compose": true,
-    "docker-compose": true
-  },
   "emmet.includeLanguages": {
-    "erb": "html"
+    "erb": "html",
+    "eex": "html"
   },
   "files.associations": {
     "*.erb": "erb",
+    "*.eex": "eex",
     "Gemfile*": "ruby",
     "Rakefile*": "ruby",
     "config.ru": "ruby",
-    "Procfile*": "yaml"
+    "Procfile*": "yaml",
+    ".env*": "env",
+    "mix.exs": "elixir"
+  },
+  "chat.tools.terminal.autoApprove": {
+    "npx expo": true,
+    "docker compose": true,
+    "docker-compose": true,
+    "npm run": true,
+    "pip install": true
   },
   "search.followSymlinks": false,
   "git.autofetch": true,
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
+  "git.ignoreLimitWarning": true,
   "workbench.editor.enablePreview": false,
   "workbench.editor.showTabs": "multiple",
   "workbench.tree.indent": 20,
+  "workbench.colorTheme": "Default Dark Modern",
   "explorer.confirmDelete": false,
-  "explorer.confirmDragAndDrop": false
+  "explorer.confirmDragAndDrop": false,
+  "_comment_prettier": "Prettier formats TypeScript/JavaScript automatically on save. Configure via .prettierrc.json in root",
+  "prettier.enable": true,
+  "prettier.semi": true,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "es5",
+  "prettier.tabWidth": 2,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "extensions.recommendations": [
+    "editorconfig.editorconfig",
+    "bradlc.vscode-tailwindcss",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "ms-python.python",
+    "ms-python.pylance",
+    "charliermarsh.ruff",
+    "ms-azuretools.vscode-docker",
+    "shopify.ruby-lsp",
+    "expo.vscode-expo-tools",
+    "github.copilot",
+    "github.copilot-chat",
+    "GitLab.gitlab-workflow",
+    "eamodio.gitlens",
+    "snyk-security.snyk-vulnerability-scanner"
+  ]
 }

@@ -1,0 +1,121 @@
+# .claudeignore - Files to exclude from Claude Code context
+# Helps Claude stay focused and reduces token usage
+
+# ============================================================================
+# DO NOT INCLUDE - Large generated files
+# ============================================================================
+
+# Node
+node_modules/
+.npm/
+dist/
+build/
+.next/
+.turbo/
+
+# Python
+__pycache__/
+.venv/
+venv/
+dist/
+build/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+
+# Ruby
+.bundle/
+vendor/bundle/
+tmp/
+log/
+
+# Elixir/Mix
+_build/
+deps/
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# Coverage
+coverage/
+htmlcov/
+.nyc_output/
+*.lcov
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# Temporary
+tmp/
+temp/
+.tmp/
+
+# Build caches
+.turbo/
+.eslintcache/
+.sass-cache/
+.cache/
+
+# ============================================================================
+# DO NOT INCLUDE - Secrets & Credentials (CRITICAL)
+# ============================================================================
+
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# Credentials
+*.pem
+*.key
+*.jks
+.ssh/
+secrets/
+
+# Git
+.git/
+.gitmodules
+
+# ============================================================================
+# INCLUDE - Important files for context
+# ============================================================================
+# Keep documentation for Claude to reference
+# Keep configuration files
+# Keep examples and templates
+
+# These are typically small and provide important context
+!.env.example
+!CLAUDE.md
+!.cursor/rules.md
+!.copilot/instructions.md
+!package.json
+!Gemfile
+!mix.exs
+!pyproject.toml
+!requirements.txt
+!docker-compose.yml
+!.editorconfig
+!.rubocop.yml
+!.eslintrc.json
+!tsconfig.json
