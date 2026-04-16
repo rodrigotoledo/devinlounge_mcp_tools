@@ -1,3 +1,12 @@
 {
-	"servers": {}
+  "servers": {
+    "default-settings-mcp": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "/Users/rodrigotoledo/www/default_settings/dist/index.js"
+      ],
+      "cwd": "/Users/rodrigotoledo/www/default_settings"
+    }
+  }
 }
