@@ -1,0 +1,68 @@
+{
+  "name": "@default-settings/mcp-server",
+  "version": "1.0.0",
+  "description": "MCP Server for multi-framework project configuration, documentation, and development guidance across NestJS, Rails, FastAPI, Phoenix, Next.js, React, and Expo",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "bin": {
+    "default-settings-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "npm run build && node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc --watch",
+    "lint": "eslint . --ext .ts,.js",
+    "format": "prettier --write \"**/*.{ts,js,json,md}\"",
+    "test": "node --test \"tests/**/*.test.js\"",
+    "typecheck": "tsc --noEmit",
+    "type-check": "npm run typecheck"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rodrigotoledo/default_settings.git"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "project-configuration",
+    "multi-framework",
+    "nestjs",
+    "rails",
+    "fastapi",
+    "phoenix",
+    "nextjs",
+    "react",
+    "expo"
+  ],
+  "author": "Rodrigo Toledo <rodrigo@rtoledo.inf.br>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rodrigotoledo/default_settings/issues"
+  },
+  "homepage": "https://github.com/rodrigotoledo/default_settings#readme",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

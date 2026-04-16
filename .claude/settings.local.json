@@ -22,7 +22,8 @@
       "Bash(bin/rails*)",
       "Bash(bin/rspec*)",
       "Bash(bin/rubocop*)",
-      "Bash(chmod +x *)"
+      "Bash(chmod +x *)",
+      "Skill(update-config)"
     ],
     "deny": [
       "Bash(pip install*)",

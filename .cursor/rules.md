@@ -8,6 +8,116 @@ These rules guide Cursor's behavior in this polyglot codebase. They ensure consi
 2. **Expo / React Native stays on host.** Use `npm`, `npm run`, `npx expo` directly in `expo-mobile/` directory.
 3. **All migrations, tests, and installs via Docker.** Always.
 
+## 📋 Elixir/Phoenix Code Style
+
+### Naming Conventions
+
+- **Modules:** `PascalCase` (e.g., `MyApp.Accounts.User`)
+- **Functions:** `snake_case` (e.g., `create_user/1`, `get_user_by_id/1`)
+- **Files:** `snake_case` matching module (e.g., `lib/my_app/accounts/user.ex`)
+- **Variables:** `snake_case` (e.g., `user_email`, `created_at`)
+- **Constants:** `SCREAMING_SNAKE_CASE` (e.g., `MAX_RETRIES`)
+- **Database columns:** `snake_case` in migrations
+
+### Patterns
+
+- **Prefer pipes** (`|>`) for chaining operations
+- **Use pattern matching** instead of if/else
+- **Guards for validation** (`when` clauses)
+- **Avoid nested conditionals** — max 2 levels
+- **Modules for grouping** — one responsibility per module
+
+### Comments
+
+- Comment the *why*, not the *what*
+- Code should be self-explanatory (clear names, simple logic)
+- Complex algorithms or business rules: explain in comments
+- No TODO comments — use GitHub issues instead
+
+### Schema/Changeset Tests
+
+```elixir
+defmodule MyApp.Accounts.UserTest do
+  use ExUnit.Case, async: true
+  alias MyApp.Accounts.User
+
+  describe "changeset/2" do
+    test "validates required fields" do
+      changeset = User.changeset(%User{}, %{})
+      refute changeset.valid?
+      assert Enum.any?(changeset.errors, &match?({:email, _}, &1))
+    end
+
+    test "validates email format" do
+      changeset = User.changeset(%User{}, %{"email" => "invalid"})
+      refute changeset.valid?
+      assert {"has invalid format", _} = changeset.errors[:email]
+    end
+
+    test "hashes password before insert" do
+      changeset = User.changeset(%User{}, %{"email" => "a@b.com", "password" => "secret123"})
+      assert changeset.valid?
+      assert changeset.changes[:password_hash]
+    end
+  end
+end
+```
+
+### Context Tests
+
+```elixir
+defmodule MyApp.AccountsTest do
+  use MyApp.DataCase  # Provides DB sandbox
+  alias MyApp.Accounts
+
+  describe "create_user/1" do
+    test "creates user with valid data" do
+      {:ok, user} = Accounts.create_user(%{
+        "email" => "new@example.com",
+        "password" => "secret123"
+      })
+      assert user.email == "new@example.com"
+    end
+
+    test "returns error with invalid data" do
+      {:error, changeset} = Accounts.create_user(%{"email" => ""})
+      refute changeset.valid?
+      assert :email in Keyword.keys(changeset.errors)
+    end
+  end
+end
+```
+
+### Controller/Integration Tests
+
+```elixir
+defmodule MyAppWeb.UserControllerTest do
+  use MyAppWeb.ConnCase
+  alias MyApp.Accounts
+
+  describe "GET /api/users/:id" do
+    test "returns user when found", %{conn: conn} do
+      user = create_user()
+      conn = get(conn, ~p"/api/users/#{user.id}")
+      assert json_response(conn, 200)["email"] == user.email
+    end
+
+    test "returns 404 when user not found", %{conn: conn} do
+      conn = get(conn, ~p"/api/users/999")
+      assert json_response(conn, 404)["error"]
+    end
+  end
+end
+```
+
+### Test Helpers
+
+- Use `ExUnit.Case` with `async: true` (safer than async: false)
+- Use `DataCase` for DB tests (automatically manages transactions)
+- Use `ConnCase` for controller/integration tests
+- Create fixtures in `test/support/fixtures/` for test data
+- NO mocking Ecto.Repo — test against real database
+
 ## 📝 Code Style
 
 - **No abbreviations.** Use `category`, not `cat`; `style`, not `st`; `configuration`, not `config` (exceptions: `pkg`, `env`, `db` in file paths and common abbreviations in established libraries).

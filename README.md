@@ -1,194 +1,422 @@
-# Hardhat
+# Default Settings - Project Template
 
-A comprehensive platform for connecting clients with workers through job postings and services.
+A comprehensive reference and template for modern multi-stack projects featuring:
+- **Backend Frameworks**: NestJS, Rails, FastAPI, Phoenix (Elixir)
+- **Frontend Frameworks**: Next.js, React, React Native (Expo)
+- **Infrastructure**: PostgreSQL, Redis, Docker Compose
+- **Developer Tools**: Git Hooks, Pre-commit Checks, GitHub Actions CI/CD
 
-## Overview
+This is a template directory with best practices, configuration examples, and automated workflows for full-stack development.
 
-Hardhat consists of:
-- **Backend API**: FastAPI-based REST API for user management, authentication, and job postings
-- **Mobile App**: React Native/Expo app for mobile access to the platform
+---
 
-## Backend API
-
-Backend em FastAPI para autenticacao, gestao de usuarios, publicacao de vagas e upload de fotos de perfil.
-
-### Visao geral
-
-Esta API fornece:
-
-- cadastro de usuarios com papeis `client`, `worker` e `admin`
-- autenticacao via JWT
-- leitura e atualizacao do perfil autenticado
-- upload de foto de perfil em `JPG`, `PNG` ou `WEBP`
-- criacao e listagem de vagas
-- atualizacao de vagas
-- documentacao automatica em `/docs` e `/redoc`
-
-### Stack usada
-
-- Python 3.12
-- FastAPI
-- Uvicorn
-- SQLAlchemy 2
-- Pydantic 2
-- python-jose para JWT
-- passlib + bcrypt para hash de senha
-- PostgreSQL (obrigatorio); `DATABASE_URL` no `.env`
-
-### Estrutura principal
+## 📂 Directory Structure
 
 ```text
-./
-|-- docker-compose.yml   # Postgres + Redis + API + Rails fullstack (na raiz)
-|-- hardhat-backend/
-|   |-- app/
-|   |-- Dockerfile
-|   |-- requirements.txt
-|   `-- .env
-`-- hardhat-expo/
+default_settings/
+├── docker-compose.yml           # Master orchestration (all services)
+├── .env.example                 # Environment variables template
+├── backend-{framework}/         # Backend service directory
+│   ├── Dockerfile               # Service container image
+│   ├── .env.example             # Service-specific variables
+│   └── ...
+├── frontend-{framework}/        # Frontend service directory
+├── mobile/                      # Mobile app directory
+├── scripts/                     # Automation scripts
+├── .husky/                      # Git hooks
+└── .github/workflows/           # CI/CD pipelines
 ```
 
-### Pre-requisitos
+---
 
-**Opcao A — sem Docker**
+## 🚀 Quick Start
 
-- Python 3.12 ou superior
-- `pip`
-- ambiente virtual Python
-- **PostgreSQL** acessivel (local ou remoto) e `DATABASE_URL` no `.env`
+### Prerequisites
 
-**Opcao B — com Docker**
+**Option A: Without Docker**
+- Node.js 22 (for frontend/NestJS)
+- Python 3.12 (for FastAPI)
+- Ruby 3.3 (for Rails)
+- Elixir 1.16 (for Phoenix)
+- PostgreSQL & Redis locally installed
 
-- Docker Engine 24 ou superior
-- Docker Compose v2 (`docker compose`)
+**Option B: With Docker (Recommended)**
+- Docker Engine 24+
+- Docker Compose v2 (`docker compose` command, no hyphen)
 
-### Docker e Docker Compose
-
-O **`docker-compose.yml` fica na raiz do repositório** e sobe **PostgreSQL** (`db`), **Redis** (`redis`) e a **API** (`api`, build a partir de `hardhat-backend/`). Variáveis da API vêm de **`hardhat-backend/.env`**. O modo **development** vs **production** vem de **`ENV`** nesse arquivo.
-
-### Arquivos
-
-| Arquivo | Uso |
-|--------|-----|
-| `docker-compose.yml` (raiz) | Orquestra `db`, `redis`, `api` e **`fullstack`** (Rails dev). |
-| `hardhat-backend/Dockerfile` | Imagem da API (Python 3.12-slim, `requirements.txt`). |
-| `hardhat-fullstack/Dockerfile` | Rails: estágio `development` no Compose; imagem final = produção (Thruster). |
-| `hardhat-backend/.env` | `DATABASE_URL`, `REDIS_URL`, `SECRET_KEY`, `ENV`, etc. |
-
-### Preparar `.env`
-
-Na **raiz do repositório** e em cada projeto:
+### Option 1: Using Docker Compose (Recommended)
 
 ```bash
+# 1. Clone and setup environment
+git clone <repo>
+cd default_settings
 cp .env.example .env
-cd hardhat-backend && cp .env.example .env
-cd ../hardhat-fullstack && cp .env.example .env
-cd ..
+cp backend-{framework}/.env.example backend-{framework}/.env
+
+# 2. Start all services
+docker compose up --build
+
+# 3. Services are available at:
+# - Frontend: http://localhost:3000
+# - Backend API: http://localhost:3001 (or 8000 for FastAPI)
+# - Database: localhost:5432
+# - Redis: localhost:6379
 ```
 
-Ou, na raiz, uma vez: **`./scripts/sync-env-from-example.sh`** — cria ou completa `.env`, `hardhat-backend/.env` e `hardhat-fullstack/.env` a partir dos `*.env.example`.
-
-### Inicio rapido (Postgres + API)
-
-1. Copie o `.env` e confira `DATABASE_URL` (padrao aponta para o servico `db` do Compose):
+### Option 2: Local Development (No Docker)
 
 ```bash
-cd hardhat-backend
-cp .env.example .env
-# Ajuste SECRET_KEY e demais variaveis
+# Backend (NestJS example)
+cd backend-nestjs
+npm install
+npm run dev
+
+# Frontend (Next.js example)
+cd frontend-nextjs
+npm install
+npm run dev
+
+# Mobile (Expo example)
+cd mobile
+npm install
+npm start
 ```
 
-2. Suba os servicos (**na raiz do repo**):
+---
+
+## 📦 Services Available
+
+### Infrastructure
+- **PostgreSQL 16**: Database (port 5432)
+- **Redis 7**: Cache & queues (port 6379)
+
+### Backend Options
+
+#### NestJS (TypeScript/Node.js)
+```bash
+docker compose exec nestjs npm run dev        # Start dev server
+docker compose exec nestjs npm run test       # Run tests
+docker compose exec nestjs npm run lint       # Check code quality
+```
+
+#### Rails (Ruby)
+```bash
+docker compose exec fullstack bin/rails db:migrate     # Run migrations
+docker compose exec fullstack bin/rspec               # Run tests
+docker compose exec fullstack bin/rubocop -A          # Fix linting
+```
+
+#### FastAPI (Python)
+```bash
+docker compose exec api uvicorn app.main:app --reload  # Start dev server
+docker compose exec api pytest                         # Run tests
+docker compose exec api ruff check --fix .             # Check code
+```
+
+#### Phoenix (Elixir)
+```bash
+docker compose exec phoenix iex -S mix phx.server      # Start server
+docker compose exec phoenix mix test                   # Run tests
+docker compose exec phoenix mix format                 # Format code
+```
+
+### Frontend Options
+
+#### Next.js (TypeScript)
+```bash
+docker compose exec nextjs npm run dev         # Start dev server
+docker compose exec nextjs npm run test        # Run tests
+docker compose exec nextjs npm run lint        # Check code
+```
+
+#### React (Vite)
+```bash
+docker compose exec react npm run dev          # Start dev server
+docker compose exec react npm run test         # Run tests
+docker compose exec react npm run lint         # Check code
+```
+
+#### React Native (Expo)
+```bash
+cd mobile
+npm start                                      # Start Expo dev server
+npm run android                                # Run on Android emulator
+npm run ios                                    # Run on iOS simulator
+```
+
+---
+
+## 🐳 Docker Compose Commands
+
+All Docker Compose commands use **v2** format (`docker compose`, not `docker-compose`):
 
 ```bash
+# Start all services
+docker compose up                 # Foreground (see logs)
+docker compose up -d              # Background (detached)
+docker compose up --build         # Rebuild images first
+
+# Stop services
+docker compose down                # Stop and remove containers
+docker compose down -v             # Also remove volumes (data loss!)
+
+# View logs
+docker compose logs -f                    # All services
+docker compose logs -f nestjs             # Specific service
+docker compose logs -f --tail=50 api      # Last 50 lines
+
+# Execute commands
+docker compose exec nestjs npm run test   # Run in existing container
+docker compose run --rm api pytest        # Run one-shot command
+
+# Database operations
+docker compose exec fullstack bin/rails db:migrate
+docker compose exec api alembic upgrade head
+
+# Rebuild specific service
+docker compose build nestjs
+docker compose up --build nextjs
+```
+
+**Key Differences from v1**:
+- `docker compose` (no hyphen) - v2
+- `docker-compose` (with hyphen) - v1 (deprecated)
+
+---
+
+## 🔧 Configuration
+
+### Environment Variables
+
+**Global** (`.env` in project root):
+```env
+NODE_ENV=development
+POSTGRES_USER=app_user
+POSTGRES_PASSWORD=dev_password
+POSTGRES_DATABASE=app_db
+REDIS_PUBLISH_PORT=6379
+NESTJS_PORT=3001
+RAILS_PORT=3000
+NEXTJS_PORT=3000
+```
+
+**Per-Service** (`.env` in service directory):
+```env
+# backend-nestjs/.env
+NESTJS_JWT_SECRET=dev-secret-key
+NESTJS_DATABASE_HOST=db
+NESTJS_REDIS_URL=redis://redis:6379/0
+
+# backend-rails/.env
+RAILS_ENV=development
+REDIS_URL=redis://redis:6379/1
+
+# frontend-nextjs/.env
+NEXT_PUBLIC_API_URL=http://localhost:3001
+```
+
+---
+
+## 🪝 Git Hooks & Automation
+
+Pre-commit and pre-push hooks ensure code quality:
+
+```bash
+# Install hooks (from project root)
+npm install husky --save-dev
+npx husky install
+npm install lint-staged --save-dev
+```
+
+**Pre-commit hooks will**:
+- Run linters (ESLint, RuboCop, Ruff, etc.)
+- Run tests (Jest, RSpec, Pytest, ExUnit)
+- Format code (Prettier, Black, Rubocop -A)
+
+**Pre-push hooks will**:
+- Prevent pushes to main/develop (use feature branches)
+- Run type checks (TypeScript, MyPy)
+- Run backend tests
+
+See `HOOKS_AND_AGENTS.md` for detailed configuration.
+
+---
+
+## 📋 Common Tasks
+
+### Database
+
+```bash
+# Create database
+docker compose exec fullstack bin/rails db:create
+docker compose exec api alembic upgrade head
+
+# Run migrations
+docker compose exec fullstack bin/rails db:migrate
+docker compose run --rm api alembic upgrade head
+
+# Seed data
+docker compose exec fullstack bin/rails db:seed
+
+# Reset database
+docker compose exec fullstack bin/rails db:reset
+```
+
+### Testing
+
+```bash
+# All services
+docker compose exec nestjs npm run test
+docker compose exec fullstack bin/rspec
+docker compose exec api pytest
+docker compose exec phoenix mix test
+
+# With coverage
+docker compose exec fullstack bin/rspec --coverage
+docker compose exec api pytest --cov
+docker compose exec phoenix mix test --cover
+```
+
+### Linting & Formatting
+
+```bash
+# Check
+docker compose exec nestjs npm run lint
+docker compose exec fullstack bin/rubocop
+docker compose exec api ruff check .
+docker compose exec phoenix mix format --check-formatted
+
+# Fix
+docker compose exec nestjs npm run lint -- --fix
+docker compose exec fullstack bin/rubocop -A
+docker compose exec api ruff check --fix .
+docker compose exec phoenix mix format
+```
+
+### Dependency Management
+
+```bash
+# Node services
+docker compose exec nestjs npm install <package>
+docker compose exec nextjs npm update
+
+# Python
+docker compose exec api pip install <package>
+docker compose exec api pip install -r requirements.txt
+
+# Ruby
+docker compose exec fullstack bundle add <gem>
+docker compose exec fullstack bundle update
+
+# Elixir
+docker compose exec phoenix mix deps.get
+docker compose exec phoenix mix deps.update <package>
+```
+
+---
+
+## 🔒 Security Checklist
+
+- [ ] `.env` is in `.gitignore` (never commit secrets)
+- [ ] `.env.example` has placeholder values only
+- [ ] Secrets are environment variables
+- [ ] Pre-commit hooks check for accidental secret commits
+- [ ] Database passwords are strong in production
+- [ ] No API keys in repository
+
+---
+
+## 🛠 Troubleshooting
+
+### Containers won't start
+```bash
+# Check logs
+docker compose logs -f
+
+# Rebuild from scratch
+docker compose down -v
 docker compose up --build
 ```
 
-3. O schema Postgres e aplicado pelo **Rails** (`fullstack` roda `db:prepare` na subida; se precisar manualmente):
-
+### Port conflicts
 ```bash
-docker compose exec fullstack bin/rails db:migrate
+# Check what's using a port
+lsof -i :3000
+
+# Kill process
+kill -9 <PID>
+
+# Or change port in .env
+NEXTJS_PORT=3001  # Use different port
 ```
 
-4. Acesse a API:
-   - API: http://localhost:8000
-   - Docs: http://localhost:8000/docs
-   - Redoc: http://localhost:8000/redoc
-
-5. **Rails (fullstack)** sobe junto em http://localhost:3000 (`FULLSTACK_PORT` para mudar a porta). Primeiro `up` pode demorar (`bundle install` / `db:prepare`). Com Compose, credenciais Postgres do Rails vêm de **`FULLSTACK_DATABASE_*`** (mesmo cluster que a API; ver `.env.example`).
-
-## Mobile App
-
-App mobile Expo com NativeWind inspirado no layout de autenticacao do projeto web Hardhat.
-
-### Rotas expo-router
-- `app/(public)/offers.tsx` - tab Trabalhos
-- `app/(public)/signup.tsx` - tab Criar Conta
-- `app/(public)/signin.tsx` - tab Minha Conta; mostra login anonimo e conta do usuario autenticado
-- `app/(public)/info.tsx` - tab Informacoes
-- `app/(public)/forgot-password.tsx` - rota de recuperacao de senha (fora da tab)
-
-### Auth hook
-- `hooks/useAuth.tsx` - provider simples usando `expo-secure-store`
-
-### Layouts
-- `app/(public)/_layout.tsx` - layout público para telas de auth
-- `app/_layout.tsx` - root layout com `AuthProvider`
-
-### Rodar localmente
-
+### Database connection issues
 ```bash
-cd hardhat-expo
-npm install
+# Wait for database to be ready
+docker compose up -d db redis
+sleep 5
+docker compose up
 ```
 
-### Comandos disponíveis
-
-#### Sincronização de ambiente
-
+### Out of disk space
 ```bash
-npm run env:sync
-```
-Sincroniza a URL da API local lendo o IP da máquina e atualizando o `.env`. Rode isso antes de iniciar se a API local mudou de endereço.
-
-#### Iniciar o app
-
-```bash
-npm start                  # inicia o Expo normalmente
-npm run start:sync         # sincroniza env e inicia
-npm run start:clean        # inicia limpando o cache do Metro
-npm run start:clean:sync   # sincroniza env, limpa cache e inicia
-npm run start:tunnel       # inicia via túnel (útil em redes restritas)
-npm run start:sync:tunnel  # sincroniza env e inicia via túnel (teste no celular físico)
+# Remove old images and volumes
+docker compose down -v
+docker system prune -a
+docker volume prune
 ```
 
-> Use `start:sync` ou `start:clean:sync` sempre que trocar de rede ou mudar o IP da máquina de desenvolvimento.
+---
 
-#### Rodar em plataforma específica
+## 📚 Documentation Files
 
-```bash
-npm run android   # build e run no emulador/device Android
-npm run ios       # build e run no simulador/device iOS
-npm run web       # inicia no navegador via Expo Web
-```
+| File | Purpose |
+|------|---------|
+| HOOKS_AND_AGENTS.md | Git hooks, pre-commit checks, agents |
+| DOCKER_COMPOSE_TEMPLATE.md | Complete docker-compose.yml example |
+| GIT_FLOW.md | Git workflow and branching strategy |
+| PROJECT_SETUP_CHECKLIST.md | Full setup verification checklist |
+| IMPLEMENTATION_CHECKLIST.md | Feature implementation tasks |
+| TOKEN_OPTIMIZATION.md | Token efficiency tips |
+| DOCUMENTATION_REVIEW_AND_FIXES.md | Issues and fixes (this review) |
 
-#### Tipagem
+---
 
-```bash
-npm run typecheck   # roda o TypeScript sem emitir arquivos (tsc --noEmit)
-```
+## 🤝 Contributing
 
-### Stack
+1. Create a feature branch: `git checkout -b feature/your-feature`
+2. Make changes and test: `docker compose up`
+3. Run tests before committing (hooks will enforce)
+4. Push to feature branch and create a pull request to `develop`
 
-- Expo
-- React Native
-- TypeScript
-- NativeWind
-- Tailwind CSS
+See `GIT_FLOW.md` for detailed branching strategy.
 
-### Direcao visual
+---
 
-- fundo `stone-50`
-- cards brancos com sombra suave
-- acento principal em `orange-600` e `orange-700`
-- logomarca com icone de predio inspirado no layout Rails
+## 📞 Support
+
+For issues or questions:
+1. Check the relevant documentation file
+2. Review Docker logs: `docker compose logs -f <service>`
+3. Verify `.env` configuration
+4. Search existing issues/discussions
+
+---
+
+## 📄 License
+
+This template is provided as-is for reference and educational purposes.
+
+---
+
+**Last Updated**: April 2026
+
+**Docker Compose Version**: v2 (recommended)
+
+**Node Version**: 22
+
+**Python Version**: 3.12
+
+**Ruby Version**: 3.3
+
+**Elixir Version**: 1.16

@@ -1,0 +1,27 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "A file was just modified: $ARGUMENTS\n\nCheck if this is a README or documentation file. If NOT a README file (exclude README.md, docs/, etc.), remind the user to review and update the README to reflect the changes made.\n\nIf it IS a README/docs file, skip the reminder.\n\nRespond with a brief reminder message if needed, or just acknowledge if no reminder is needed."
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash(git commit*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "git diff --cached --name-only | grep -qE '^(backend-|web-|expo-|\\.[^/]+)' && ! git diff --cached --name-only | grep -qE '(README|readme|CHANGELOG|changelog|docs/)' && echo '{\"continue\":false,\"stopReason\":\"README validation: You are committing project changes but README was not updated. Please review and update the relevant README files (README.md, service-specific docs, CHANGELOG) to reflect your changes. Use git add to stage README updates, then retry the commit.\"}' || echo '{\"continue\":true}'",
+            "statusMessage": "Validating README changes..."
+          }
+        ]
+      }
+    ]
+  }
+}
