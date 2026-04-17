@@ -1,0 +1,39 @@
+---
+description: Project profile aliases for Cursor agent
+alwaysApply: true
+---
+
+# Workspace profiles
+
+`<profile>-*` labels are instruction profile aliases (Expo, backend API, and Rails fullstack), not a single Expo-only project name.
+
+- **`expo/`** — Expo Router app (React Native, NativeWind/Tailwind, TypeScript strict). Run scripts from this folder (`npm run typecheck`, `expo start`).
+- **`api/`** — FastAPI + SQLAlchemy (Python). **All** API run/install/Python commands go through **Docker Compose at the repo root** (`docker compose exec api …` / `run --rm api …`). Env: `api/.env`.
+- **`fullstack-rails/`** — Rails 8. **Prefer Docker** for `bundle`, `rails`, `rspec`, `rubocop`: `docker compose exec fullstack …` from repo root (same Compose file). Schema migrations: `fullstack-rails/db/migrate/`.
+- **Repo root** — `docker-compose.yml` (Postgres, Redis, `api`, `fullstack`); may contain Ruby/RuboCop config; prefer stack-specific conventions in each subproject.
+
+## Conventions
+
+- Prefer **focused diffs**: change only what the task requires; match existing patterns in the touched package.
+- **Expo**: file-based routes under `expo/app/`; shared UI in `expo/components/`.
+- **Expo UI (NativeWind)**: Prefer **Tailwind utilities via `className`**. Use `style={{}}` only when necessary. Use `theme/colors.ts` for programmatic colors.
+- **Backend**: keep Pydantic/SQLAlchemy models aligned with the DB; **schema changes** live in **`fullstack-rails/db/migrate/`** — run `docker compose exec fullstack bin/rails db:migrate` (see root `docker-compose.yml`).
+
+### Rails tests (`fullstack-rails/`)
+
+- For brand-new Rails apps, generate with `bin/rails new ... --skip-test`, then install/configure `rspec-rails`, `shoulda-matchers`, `simplecov`, and `guard-rspec`.
+- Before Rails auth/layout scaffolding, ask: auth with `bcrypt`, authorization with `cancancan` or `pundit`, and styling with `tailwindcss-rails` or `simplecss`.
+- Do not assume `devise` by default.
+- **RSpec only** (`spec/`, `bin/rspec` via Compose `fullstack`); do not default to Minitest for app tests.
+- Prefer **request specs** over controller specs.
+- Use route/path helpers (`root_path`, `user_path(user)`) instead of hardcoded route strings in specs.
+- **Never assert equality on full error or flash message strings** — they are brittle (copy/i18n). Use validity/`errors` details or key presence; for flash, assert **that** `:notice` / `:alert` is present (or missing), not the exact text.
+
+### RuboCop (`fullstack-rails/`)
+
+- After **any** change under `fullstack-rails/` (`.rb`, `.erb`, etc.), run **`docker compose exec fullstack bin/rubocop`** and fix offenses (see rule `fullstack-rubocop-always`).
+
+## Editor hints
+
+- Workspace TypeScript for the app comes from `expo/node_modules/typescript` (VS Code/Cursor setting).
+- Tailwind IntelliSense uses `expo/tailwind.config.js`; `className` is the primary styling prop in the Expo app (see `tailwindCSS.classAttributes` in `.vscode/settings.json`).

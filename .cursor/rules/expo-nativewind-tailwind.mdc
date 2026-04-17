@@ -1,6 +1,6 @@
 ---
 description: Expo UI uses NativeWind/Tailwind via className (keep styles consistent)
-globs: hardhat-expo/**/*.{ts,tsx}
+globs: expo/**/*.{ts,tsx}
 alwaysApply: false
 ---
 
@@ -8,6 +8,6 @@ alwaysApply: false
 
 - Prefer **Tailwind utilities via `className`** for layout, spacing, typography and colors.
 - Use `style={{}}` only when Tailwind is impractical (dynamic numeric values, `Animated`, APIs requiring inline styles, or matching surrounding patterns).
-- Tailwind IntelliSense is configured to use `hardhat-expo/tailwind.config.js` (see `.vscode/settings.json`).
-- When you need programmatic colors (e.g. for `Paper`, icons, `ActivityIndicator`), reuse `hardhat-expo/theme/colors.ts`.
+-- Tailwind IntelliSense is configured to use `expo/tailwind.config.js` (see `.vscode/settings.json`).
+- When you need programmatic colors (e.g. for `Paper`, icons, `ActivityIndicator`), reuse `expo/theme/colors.ts`.
 

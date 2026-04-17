@@ -7,11 +7,11 @@ alwaysApply: true
 
 **Agents and terminals:** run **`docker compose` from the repository root** (`docker-compose.yml`). **Do not** default to host **`python`**, **`pip`**, **`uvicorn`**, **`bundle`**, **`rspec`**, **`rails`**, or **`rake`** for the composed API or Rails app unless the user explicitly opts out.
 
-- **FastAPI** (`hardhat-backend/`): all runtime, installs, and Python one-offs → **`docker compose exec api …`** or **`run --rm api …`**.
-- **Rails** (`hardhat-fullstack/`): migrations, `bundle install`, `rspec`, `rubocop`, consoles, generators → **`docker compose exec fullstack …`**. **Sidekiq** runs in service **`fullstack-worker`** (same `DATABASE_*` / `REDIS_URL` as `fullstack`).
+-- **FastAPI** (`api/`): all runtime, installs, and Python one-offs → **`docker compose exec api …`** or **`run --rm api …`**.
+-- **Rails** (`fullstack-rails/`): migrations, `bundle install`, `rspec`, `rubocop`, consoles, generators → **`docker compose exec fullstack …`**. **Sidekiq** runs in service **`fullstack-worker`** (same `DATABASE_*` / `REDIS_URL` as `fullstack`).
 - **Postgres DDL** (shared with the API): **`docker compose exec fullstack bin/rails db:migrate`**. **Redis** (`REDIS_URL`): Action Cable + Sidekiq — distinct DB index from the FastAPI service when both use the same Redis host. Fragment cache = Solid Cache (Postgres `DATABASE_CACHE_NAME`).
 
-API reads **`hardhat-backend/.env`** when present; Rails reads **`hardhat-fullstack/.env`** when present.
+API reads **`api/.env`** when present; Rails reads **`fullstack-rails/.env`** when present.
 
 ## Typical commands (repo root)
 
@@ -35,4 +35,4 @@ Use **`exec`** when the service is already **`up`**. Use **`run --rm`** for one-
 
 ## Expo
 
-**`hardhat-expo/`** uses **Node/npm on the host** (`npm run typecheck`, `npx expo start`). This rule does **not** apply there.
+**`expo/`** uses **Node/npm on the host** (`npm run typecheck`, `npx expo start`). This rule does **not** apply there.

@@ -830,7 +830,7 @@ SWR is optional, but this template defaults to **TanStack Query** for server-sta
 
 ```json
 {
-  "name": "hardhat-expo",
+  "name": "expo",
   "version": "1.0.0",
   "dependencies": {
     "expo": "^50.0.0",

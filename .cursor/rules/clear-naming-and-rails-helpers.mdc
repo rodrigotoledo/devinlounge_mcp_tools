@@ -15,13 +15,13 @@ alwaysApply: true
   - Avoid: `isProv`, `ok2`, `flag`
 - Use domain terms consistently across app + backend: **job**, **provider**, **client**, **category**, **status**.
 
-## Rails fullstack (`hardhat-fullstack/`)
+## Rails fullstack (`fullstack-rails/`)
 
 - Prefer putting non-trivial view logic in **Rails helpers** (e.g. `ApplicationHelper`, `OffersHelper`) or **partials**, rather than inline ERB.
 - Keep helpers **small and focused**; avoid heavy business logic in helpers (belongs to models/services).
 - When you need a derived label or CSS class mapping, prefer a helper method (testable, reusable).
 
-## Expo (`hardhat-expo/`)
+## Expo (`expo/`)
 
 - Same naming rule applies for component props/state: prefer clear names (`category`, `style`, `searchQuery`) over abbreviations.
 

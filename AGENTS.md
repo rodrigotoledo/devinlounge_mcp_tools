@@ -2,17 +2,18 @@
 
 This repo is a **monorepo**:
 
-`hardhat-*` names below are stack profile aliases used in these instructions (they are not limited to Expo-only projects).
+
 
 General runtime rule: **Expo runs on the host; every other stack runs through Docker Compose**. Compose services should use bind mounts so local file edits are reflected inside containers during development.
 
 Inter-service networking rule (all agents): inside Docker, services must call each other by **Compose service name** (`http://api:8000`, `http://nestjs:3001`, `http://fullstack:3000`) and never `localhost`. `localhost` is only for host/browser access to published ports.
 
-- **`hardhat-expo/`** — Mobile app (Expo Router, React Native, TypeScript, NativeWind). Use **Node/npm on the host** (`npm run typecheck`, `expo start`). Prefer **Tailwind via `className`** for UI; use `style` only when necessary (see **`CLAUDE.md`** and **`.cursor/rules/hardhat-project.mdc`**).
-- **`hardhat-backend/`** — REST API (FastAPI, Python). **Every** API command (`pip`, `python`, `uvicorn`, etc.) must use **Docker Compose at the repo root** (`docker compose exec api …` or `run --rm api …`). Env: `hardhat-backend/.env`. Do **not** suggest host Python/uvicorn/pip unless the user explicitly opts out.
-- **`hardhat-fullstack/`** — Rails. **Always use Docker Compose** for runtime tooling: `docker compose exec fullstack bundle install`, `bin/rails`, `bin/rspec`, `bin/rubocop`, etc. Every Rails project should include a `docker-compose.yml` with at least app + database services. When creating new Rails apps, use `bin/rails new ... --skip-test`, then install and configure `rspec-rails`, `shoulda-matchers`, `simplecov`, and `guard-rspec` (includes `guard` dependency), and run `bundle exec guard init rspec` to generate `Guardfile`. Before scaffolding, ask the Rails gem decisions first: authentication (`bcrypt` or OAuth), authorization (`cancancan`, `pundit`, or none), styling (`tailwindcss-rails` or `simplecss`), background jobs (`solid_queue` or `sidekiq`), pagination (`pagy` or `kaminari`), and whether the app is HTML-first or API-heavy (`jbuilder`/`blueprinter` only when needed). Ask follow-up gem questions when relevant: search (`ransack`/`pg_search`), uploads (Active Storage / `image_processing` / `shrine`), admin (`activeadmin`/`avo`), auditing (`paper_trail`/`audited`), and multi-tenancy (`acts_as_tenant`). Do **not** use `devise` in this template default flow, and do **not** keep Minitest as the primary test workflow. **Postgres schema:** `hardhat-fullstack/db/migrate/` (apply with `docker compose exec fullstack bin/rails db:migrate`). Do **not** default to host `bundle`/`rails`/`rspec` for the composed app unless the user opts out.
 
-If your project is only React Native/Expo, apply only the `hardhat-expo` profile and ignore backend/fullstack entries.
+- **`expo/`** — Mobile app (Expo Router, React Native, TypeScript, NativeWind). Use **Node/npm on the host** (`npm run typecheck`, `expo start`). Prefer **Tailwind via `className`** for UI; use `style` only when necessary (see **`CLAUDE.md`** and **`.cursor/rules/expo-nativewind-tailwind.mdc`**).
+- **`api/`** — REST API (FastAPI, Python). **Every** API command (`pip`, `python`, `uvicorn`, etc.) must use **Docker Compose at the repo root** (`docker compose exec api …` or `run --rm api …`). Env: `api/.env`. Do **not** suggest host Python/uvicorn/pip unless the user explicitly opts out.
+- **`fullstack-rails/`** — Rails. **Always use Docker Compose** for runtime tooling: `docker compose exec fullstack bundle install`, `bin/rails`, `bin/rspec`, `bin/rubocop`, etc. Every Rails project should include a `docker-compose.yml` with at least app + database services. When creating new Rails apps, use `bin/rails new ... --skip-test`, depois instale e configure `rspec-rails`, `shoulda-matchers`, `simplecov`, e `guard-rspec` (inclui `guard` como dependência), e rode `bundle exec guard init rspec` para gerar o `Guardfile`. Antes de gerar recursos, defina as gems principais: autenticação (`bcrypt` ou OAuth), autorização (`cancancan`, `pundit` ou nenhuma), CSS (`tailwindcss-rails` ou `simplecss`), background jobs (`solid_queue` ou `sidekiq`), paginação (`pagy` ou `kaminari`), e se o app é HTML-first ou API-heavy (`jbuilder`/`blueprinter` só quando necessário). Pergunte sobre gems extras quando relevante: busca (`ransack`/`pg_search`), uploads (Active Storage / `image_processing` / `shrine`), admin (`activeadmin`/`avo`), auditoria (`paper_trail`/`audited`), multi-tenancy (`acts_as_tenant`). Não use `devise` por padrão, nem mantenha Minitest como workflow principal. **Postgres schema:** `fullstack-rails/db/migrate/` (aplique com `docker compose exec fullstack bin/rails db:migrate`).
+
+Se seu projeto for só React Native/Expo, use apenas o perfil `expo` e ignore entradas de backend/fullstack.
 
 ## Code clarity
 
@@ -31,6 +32,6 @@ If your project is only React Native/Expo, apply only the `hardhat-expo` profile
 
 For React/Expo projects, default to TanStack Query and do not introduce Redux unless explicitly requested.
 
-**Rails tests:** RSpec only in `hardhat-fullstack/`, with `simplecov`, `shoulda-matchers`, and `guard-rspec` configured by default. Prefer **request specs** over controller specs. In specs, use Rails route helpers (`root_path`, `user_path(user)`) instead of hardcoded URL strings; do not assert exact validation or flash **message** strings — use validity/errors structure and flash **presence**; see **`CLAUDE.md`** (Testing — hardhat-fullstack).
+**Rails tests:** RSpec only in `fullstack-rails/`, with `simplecov`, `shoulda-matchers`, and `guard-rspec` configured by default. Prefer **request specs** over controller specs. In specs, use Rails route helpers (`root_path`, `user_path(user)`) instead of hardcoded URL strings; do not assert exact validation or flash **message** strings — use validity/errors structure and flash **presence**; see **`CLAUDE.md`** (Testing — fullstack-rails).
 
 Shared editor settings: **`.vscode/`**. Cursor rules: **`.cursor/rules/`**. GitHub Copilot: **`.github/copilot-instructions.md`**. Canonical command table: **`CLAUDE.md`**.

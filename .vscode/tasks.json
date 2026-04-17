@@ -6,7 +6,7 @@
       "type": "shell",
       "command": "npm run typecheck",
       "options": {
-        "cwd": "${workspaceFolder}/hardhat-expo"
+        "cwd": "${workspaceFolder}/expo"
       },
       "problemMatcher": "$tsc",
       "group": {
@@ -19,7 +19,7 @@
       "type": "shell",
       "command": "npx expo start",
       "options": {
-        "cwd": "${workspaceFolder}/hardhat-expo"
+        "cwd": "${workspaceFolder}/expo"
       },
       "problemMatcher": [],
       "isBackground": true

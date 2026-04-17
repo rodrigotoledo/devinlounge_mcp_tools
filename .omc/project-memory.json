@@ -112,13 +112,13 @@
       "type": "directory"
     },
     {
-      "path": "hardhat-expo/app/(public)/signup.tsx",
+      "path": "expo/app/(public)/signup.tsx",
       "accessCount": 18,
       "lastAccessed": 1775517906620,
       "type": "file"
     },
     {
-      "path": "hardhat-expo/app/(public)/offers/[id].tsx",
+      "path": "expo/app/(public)/offers/[id].tsx",
       "accessCount": 15,
       "lastAccessed": 1775500650518,
       "type": "file"
@@ -130,61 +130,61 @@
       "type": "file"
     },
     {
-      "path": "hardhat-fullstack/app/views/home/index.html.erb",
+      "path": "fullstack-rails/app/views/home/index.html.erb",
       "accessCount": 9,
       "lastAccessed": 1775523050950,
       "type": "file"
     },
     {
-      "path": "hardhat-expo/app/(public)/become-provider.tsx",
+      "path": "expo/app/(public)/become-provider.tsx",
       "accessCount": 6,
       "lastAccessed": 1775446793374,
       "type": "file"
     },
     {
-      "path": "hardhat-backend/app/routers/jobs.py",
+      "path": "api/app/routers/jobs.py",
       "accessCount": 6,
       "lastAccessed": 1775500613695,
       "type": "file"
     },
     {
-      "path": "hardhat-backend/app/schemas.py",
+      "path": "api/app/schemas.py",
       "accessCount": 6,
       "lastAccessed": 1775500624622,
       "type": "file"
     },
     {
-      "path": "hardhat-expo/services/offers.ts",
+      "path": "expo/services/offers.ts",
       "accessCount": 6,
       "lastAccessed": 1775500636811,
       "type": "file"
     },
     {
-      "path": "hardhat-fullstack/app/views/layouts/application.html.erb",
+      "path": "fullstack-rails/app/views/layouts/application.html.erb",
       "accessCount": 5,
       "lastAccessed": 1775520654697,
       "type": "file"
     },
     {
-      "path": "hardhat-backend/app/routers/auth.py",
+      "path": "api/app/routers/auth.py",
       "accessCount": 4,
       "lastAccessed": 1775425307929,
       "type": "file"
     },
     {
-      "path": "hardhat-backend/app/routers/users.py",
+      "path": "api/app/routers/users.py",
       "accessCount": 4,
       "lastAccessed": 1775425329280,
       "type": "file"
     },
     {
-      "path": "hardhat-backend/app/models.py",
+      "path": "api/app/models.py",
       "accessCount": 4,
       "lastAccessed": 1775500612525,
       "type": "file"
     },
     {
-      "path": "hardhat-backend/app/crud.py",
+      "path": "api/app/crud.py",
       "accessCount": 3,
       "lastAccessed": 1775425309926,
       "type": "file"
@@ -196,13 +196,13 @@
       "type": "file"
     },
     {
-      "path": "hardhat-expo/app/(public)/account/signup.tsx",
+      "path": "expo/app/(public)/account/signup.tsx",
       "accessCount": 2,
       "lastAccessed": 1775423761082,
       "type": "file"
     },
     {
-      "path": "hardhat-expo/services/fakeData.ts",
+      "path": "expo/services/fakeData.ts",
       "accessCount": 2,
       "lastAccessed": 1775425372272,
       "type": "file"
@@ -244,79 +244,79 @@
       "type": "file"
     },
     {
-      "path": "hardhat-expo/app/(public)/signin.tsx",
+      "path": "expo/app/(public)/signin.tsx",
       "accessCount": 1,
       "lastAccessed": 1775420000967,
       "type": "file"
     },
     {
-      "path": "hardhat-expo/services/submitPendingJob.ts",
+      "path": "expo/services/submitPendingJob.ts",
       "accessCount": 1,
       "lastAccessed": 1775420012564,
       "type": "file"
     },
     {
-      "path": "hardhat-expo/components/SigninForm.tsx",
+      "path": "expo/components/SigninForm.tsx",
       "accessCount": 1,
       "lastAccessed": 1775420016428,
       "type": "file"
     },
     {
-      "path": "hardhat-expo/app/(public)/account/account-edit.tsx",
+      "path": "expo/app/(public)/account/account-edit.tsx",
       "accessCount": 1,
       "lastAccessed": 1775420094155,
       "type": "file"
     },
     {
-      "path": "hardhat-expo/app/(public)/account-edit.tsx",
+      "path": "expo/app/(public)/account-edit.tsx",
       "accessCount": 1,
       "lastAccessed": 1775420102228,
       "type": "file"
     },
     {
-      "path": "hardhat-backend/alembic/versions/b2c3d4e5f6a7_add_job_extra_columns.py",
+      "path": "api/alembic/versions/b2c3d4e5f6a7_add_job_extra_columns.py",
       "accessCount": 1,
       "lastAccessed": 1775420127032,
       "type": "file"
     },
     {
-      "path": "hardhat-backend/migration_helpers.py",
+      "path": "api/migration_helpers.py",
       "accessCount": 1,
       "lastAccessed": 1775420174347,
       "type": "file"
     },
     {
-      "path": "hardhat-backend/alembic/versions/70dd7bfa0d5d_add_service_type_to_jobs.py",
+      "path": "api/alembic/versions/70dd7bfa0d5d_add_service_type_to_jobs.py",
       "accessCount": 1,
       "lastAccessed": 1775420175266,
       "type": "file"
     },
     {
-      "path": "hardhat-backend/alembic/versions/e5f6a7b8c9d0_add_proposed_job_status.py",
+      "path": "api/alembic/versions/e5f6a7b8c9d0_add_proposed_job_status.py",
       "accessCount": 1,
       "lastAccessed": 1775420716888,
       "type": "file"
     },
     {
-      "path": "hardhat-expo/services/api.ts",
+      "path": "expo/services/api.ts",
       "accessCount": 1,
       "lastAccessed": 1775425230851,
       "type": "file"
     },
     {
-      "path": "hardhat-expo/app/(public)/home.tsx",
+      "path": "expo/app/(public)/home.tsx",
       "accessCount": 1,
       "lastAccessed": 1775446672210,
       "type": "file"
     },
     {
-      "path": "hardhat-expo/app/(public)/offers/index.tsx",
+      "path": "expo/app/(public)/offers/index.tsx",
       "accessCount": 1,
       "lastAccessed": 1775446684668,
       "type": "file"
     },
     {
-      "path": "hardhat-backend/app/address_utils.py",
+      "path": "api/app/address_utils.py",
       "accessCount": 1,
       "lastAccessed": 1775446685249,
       "type": "file"
@@ -328,79 +328,79 @@
       "type": "file"
     },
     {
-      "path": ".cursor/rules/hardhat-project.mdc",
+      "path": ".cursor/rules/project-profiles.mdc",
       "accessCount": 1,
       "lastAccessed": 1775496352812,
       "type": "file"
     },
     {
-      "path": "hardhat-expo/package.json",
+      "path": "expo/package.json",
       "accessCount": 1,
       "lastAccessed": 1775496383461,
       "type": "file"
     },
     {
-      "path": "hardhat-expo/tailwind.config.js",
+      "path": "expo/tailwind.config.js",
       "accessCount": 1,
       "lastAccessed": 1775496383905,
       "type": "file"
     },
     {
-      "path": "hardhat-backend/requirements.txt",
+      "path": "api/requirements.txt",
       "accessCount": 1,
       "lastAccessed": 1775496386898,
       "type": "file"
     },
     {
-      "path": "hardhat-backend/app/routers/admin.py",
+      "path": "api/app/routers/admin.py",
       "accessCount": 1,
       "lastAccessed": 1775500619588,
       "type": "file"
     },
     {
-      "path": "hardhat-backend/app/dependencies.py",
+      "path": "api/app/dependencies.py",
       "accessCount": 1,
       "lastAccessed": 1775500650967,
       "type": "file"
     },
     {
-      "path": "hardhat-expo/app/(public)/account/my-jobs.tsx",
+      "path": "expo/app/(public)/account/my-jobs.tsx",
       "accessCount": 1,
       "lastAccessed": 1775500654597,
       "type": "file"
     },
     {
-      "path": "hardhat-backend",
+      "path": "api",
       "accessCount": 1,
       "lastAccessed": 1775500655718,
       "type": "directory"
     },
     {
-      "path": "hardhat-fullstack/app/controllers/home_controller.rb",
+      "path": "fullstack-rails/app/controllers/home_controller.rb",
       "accessCount": 1,
       "lastAccessed": 1775517227328,
       "type": "file"
     },
     {
-      "path": "hardhat-fullstack/app/assets/tailwind/application.css",
+      "path": "fullstack-rails/app/assets/tailwind/application.css",
       "accessCount": 1,
       "lastAccessed": 1775517243181,
       "type": "file"
     },
     {
-      "path": "hardhat-fullstack/app/javascript/controllers/hello_controller.js",
+      "path": "fullstack-rails/app/javascript/controllers/hello_controller.js",
       "accessCount": 1,
       "lastAccessed": 1775517243465,
       "type": "file"
     },
     {
-      "path": "hardhat-fullstack/app/javascript/controllers/nav_controller.js",
+      "path": "fullstack-rails/app/javascript/controllers/nav_controller.js",
       "accessCount": 1,
       "lastAccessed": 1775517262933,
       "type": "file"
     },
     {
-      "path": "hardhat-fullstack/Gemfile",
+      "path": "fullstack-rails/Gemfile",
       "accessCount": 1,
       "lastAccessed": 1775517384037,
       "type": "file"

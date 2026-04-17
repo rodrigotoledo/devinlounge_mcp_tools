@@ -1,16 +1,16 @@
-# Hardhat Monorepo - Windsurf Rules
+# Monorepo - Windsurf Rules
 
 ## Project Structure
-- **`hardhat-expo/`** — Expo Router app (React Native, NativeWind/Tailwind, TypeScript strict). Run scripts from this folder (`npm run typecheck`, `expo start`).
-- **`hardhat-backend/`** — FastAPI + SQLAlchemy (Python). **ALL** API run/install/Python commands go through **Docker Compose at the repo root** (`docker compose exec api …` / `run --rm api …`). Env: `hardhat-backend/.env`.
-- **`hardhat-fullstack/`** — Rails 8. **Prefer Docker** for `bundle`, `rails`, `rspec`, `rubocop`: `docker compose exec fullstack …` from repo root. Schema migrations: `hardhat-fullstack/db/migrate/`.
+- **`expo/`** — Expo Router app (React Native, NativeWind/Tailwind, TypeScript strict). Run scripts from this folder (`npm run typecheck`, `expo start`).
+- **`api/`** — FastAPI + SQLAlchemy (Python). **ALL** API run/install/Python commands go through **Docker Compose at the repo root** (`docker compose exec api …` / `run --rm api …`). Env: `api/.env`.
+- **`fullstack-rails/`** — Rails 8. **Prefer Docker** for `bundle`, `rails`, `rspec`, `rubocop`: `docker compose exec fullstack …` from repo root. Schema migrations: `fullstack-rails/db/migrate/`.
 - **Repo root** — `docker-compose.yml` (Postgres, Redis, `api`, `fullstack`); contains Ruby/RuboCop config.
 
 ## Docker Compose Requirements
 **Agents and terminals:** run **`docker compose` from the repository root**. **Do not** default to host **`python`**, **`pip`**, **`uvicorn`**, **`bundle`**, **`rspec`**, **`rails`**, or **`rake`** for the composed API or Rails app unless the user explicitly opts out.
 
-- **FastAPI** (`hardhat-backend/`): all runtime, installs, and Python one-offs → **`docker compose exec api …`** or **`run --rm api …`**.
-- **Rails** (`hardhat-fullstack/`): migrations, `bundle install`, `rspec`, `rubocop`, consoles, generators → **`docker compose exec fullstack …`**. **Sidekiq** runs in service **`fullstack-worker`**.
+-- **FastAPI** (`api/`): all runtime, installs, and Python one-offs → **`docker compose exec api …`** or **`run --rm api …`**.
+-- **Rails** (`fullstack-rails/`): migrations, `bundle install`, `rspec`, `rubocop`, consoles, generators → **`docker compose exec fullstack …`**. **Sidekiq** runs in service **`fullstack-worker`**.
 - **Postgres DDL** (shared): **`docker compose exec fullstack bin/rails db:migrate`**.
 
 ## Expo UI Conventions

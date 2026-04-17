@@ -1,12 +1,12 @@
 ---
-description: After any change in hardhat-fullstack/, run RuboCop (Docker) and fix offenses
-globs: hardhat-fullstack/**/*.{rb,rake,ru,erb}
+description: After any change in fullstack-rails/, run RuboCop (Docker) and fix offenses
+globs: fullstack-rails/**/*.{rb,rake,ru,erb}
 alwaysApply: false
 ---
 
 # Rails fullstack — RuboCop required after changes
 
-Whenever you change **any** Ruby/ERB file under `hardhat-fullstack/`, you must:
+Whenever you change **any** Ruby/ERB file under `fullstack-rails/`, you must:
 
 - Run RuboCop **inside Docker Compose** from the repo root:
   - `docker compose exec fullstack bin/rubocop`

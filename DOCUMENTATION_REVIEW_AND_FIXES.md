@@ -10,17 +10,17 @@ This document reviews the current documentation files in the default_settings te
 
 ### 1. **README.md - Identity Crisis**
 
-**Issue**: README presents this as an actual "Hardhat" project (clients/workers platform) rather than a template/reference directory.
+**Issue**: README presents this as an actual multi-stack project (clients/workers platform) rather than uma template/reference directory.
 
 **Current Content**:
 ```markdown
-# Hardhat
+# Multi-stack
 A comprehensive platform for connecting clients with workers through job postings and services.
 ```
 
 **Problems**:
 - [ ] Confuses template users about the project's purpose
-- [ ] Has project-specific paths (hardhat-backend, hardhat-expo, hardhat-fullstack)
+- [ ] Has project-specific paths (api, expo, fullstack-rails)
 - [ ] Mix of Portuguese and English
 - [ ] References specific FastAPI, Rails, and React Native implementations as if required
 
@@ -140,9 +140,9 @@ Backend em FastAPI para...  # Portuguese
 
 **Examples**:
 ```markdown
-hardhat-backend/
-hardhat-fullstack/
-hardhat-expo/
+api/
+fullstack-rails/
+expo/
 ```
 
 **Better for Template**:
@@ -178,7 +178,7 @@ docker compose exec nestjs npm run test  # What if service is down?
 
 **Replace**:
 ```markdown
-# Hardhat
+# Multi-stack
 
 A comprehensive platform for connecting clients with workers...
 ```
