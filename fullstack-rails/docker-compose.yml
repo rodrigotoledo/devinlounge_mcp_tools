@@ -1,33 +1,84 @@
+
 version: '3.9'
 
 services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DATABASE:-app_db}
+    ports:
+      - "${POSTGRES_PUBLISH_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    ports:
+      - "${REDIS_PUBLISH_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
   fullstack:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: app_fullstack
+      args:
+        USER_ID: ${USER_ID:-1000}
+        GROUP_ID: ${GROUP_ID:-1000}
+    tty: true
+    stdin_open: true
     environment:
-      - RAILS_ENV=development
-      - DATABASE_URL=postgresql://postgres:password@postgres:5432/app_development
-    volumes:
-      - ./:/app
+      RAILS_ENV: ${RAILS_ENV:-development}
+      PORT: ${PORT:-3000}
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_USER: ${POSTGRES_USER:-postgres}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      DATABASE_NAME: ${POSTGRES_DATABASE:-app_db}
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379/1}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE:-dev-secret}
     ports:
-      - "3000:3000"
+      - "${PORT:-3000}:3000"
+    volumes:
+      - .:/rails:cached
+      - bundle:/usr/local/bundle
+    working_dir: /rails
     depends_on:
-      - postgres
-    command: bash -c "rm -f tmp/pids/server.pid && bundle install && bin/rails server -b 0.0.0.0"
-
-  postgres:
-    image: postgres:15
-    container_name: app_postgres
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=app_development
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: ["./bin/dev"]
+    networks:
+      - backend
+      - frontend
 
 volumes:
-  pgdata:
+  postgres_data:
+  redis_data:
+  bundle:
+
+networks:
+  backend:
+    driver: bridge
+  frontend:
+    driver: bridge

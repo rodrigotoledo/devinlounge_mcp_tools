@@ -15,7 +15,7 @@
     },
     "devinlounge-mcp-tools": {
       "type": "http",
-      "url": "https://devinlounge-mcp-tools.onrender.com/mcp",
+      "url": "http://localhost:8080/mcp",
       "headers": {
         "Accept": "text/event-stream",
         "Cache-Control": "no-cache"

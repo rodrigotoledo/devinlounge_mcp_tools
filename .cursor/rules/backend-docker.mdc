@@ -3,7 +3,37 @@ description: API and Rails fullstack must use Docker Compose — agents must not
 alwaysApply: true
 ---
 
+
 # Docker Compose — API (`api`) + Rails (`fullstack`) + `db` + `redis`
+
+## Rails fullstack: padrão Procfile.dev/Procfile e Foreman
+
+Todo projeto Rails fullstack deve orquestrar processos via Foreman/bin/dev, nunca apenas com `rails server`.
+
+**Procfile.dev (desenvolvimento):**
+```
+web: bin/rails server -b 0.0.0.0
+css: bin/rails tailwindcss:watch
+worker: bundle exec sidekiq
+```
+
+**Procfile (produção):**
+```
+web: bundle exec puma -C config/puma.rb
+css: bin/rails tailwindcss:build
+worker: bundle exec sidekiq
+```
+
+Sempre suba o ambiente local com:
+```
+bundle exec foreman start -f Procfile.dev
+# ou
+bin/dev
+```
+
+O docker-compose já está configurado para rodar `./bin/dev`.
+Nunca defina a porta no Procfile.dev, deixe o Rails usar a porta do ambiente.
+O processo CSS (Tailwind) é obrigatório para hot reload.
 
 **Agents and terminals:** run **`docker compose` from the repository root** (`docker-compose.yml`). **Do not** default to host **`python`**, **`pip`**, **`uvicorn`**, **`bundle`**, **`rspec`**, **`rails`**, or **`rake`** for the composed API or Rails app unless the user explicitly opts out.
 

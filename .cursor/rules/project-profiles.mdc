@@ -19,7 +19,35 @@ alwaysApply: true
 - **Expo UI (NativeWind)**: Prefer **Tailwind utilities via `className`**. Use `style={{}}` only when necessary. Use `theme/colors.ts` for programmatic colors.
 - **Backend**: keep Pydantic/SQLAlchemy models aligned with the DB; **schema changes** live in **`fullstack-rails/db/migrate/`** — run `docker compose exec fullstack bin/rails db:migrate` (see root `docker-compose.yml`).
 
-### Rails tests (`fullstack-rails/`)
+
+### Rails fullstack: Procfile.dev/Procfile e Foreman
+
+Todo projeto Rails fullstack deve usar Foreman/bin/dev para orquestrar processos:
+
+**Procfile.dev (desenvolvimento):**
+```
+web: bin/rails server -b 0.0.0.0
+css: bin/rails tailwindcss:watch
+worker: bundle exec sidekiq
+```
+
+**Procfile (produção):**
+```
+web: bundle exec puma -C config/puma.rb
+css: bin/rails tailwindcss:build
+worker: bundle exec sidekiq
+```
+
+Sempre suba o ambiente local com:
+```
+bundle exec foreman start -f Procfile.dev
+# ou
+bin/dev
+```
+
+O docker-compose já está configurado para rodar `./bin/dev`.
+Nunca defina a porta no Procfile.dev, deixe o Rails usar a porta do ambiente.
+O processo CSS (Tailwind) é obrigatório para hot reload.
 
 - For brand-new Rails apps, generate with `bin/rails new ... --skip-test`, then install/configure `rspec-rails`, `shoulda-matchers`, `simplecov`, and `guard-rspec`.
 - Before Rails auth/layout scaffolding, ask: auth with `bcrypt`, authorization with `cancancan` or `pundit`, and styling with `tailwindcss-rails` or `simplecss`.
